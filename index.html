@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#3b1f8f">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="apple-mobile-web-app-title" content="سعري اليوم">
 <meta name="description" content="أعيدي تسعير منتجاتك حسب سعر الدولار اليوم، واصنعي قائمة أسعار ملونة للواتساب.">
 <title>سعري اليوم</title>
@@ -176,6 +179,9 @@ input[inputmode]{direction:ltr;text-align:center;font-variant-numeric:tabular-nu
 .custom-color{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
 .custom-color input[type=color]{width:48px;height:42px;padding:2px;border-radius:12px;cursor:pointer}
 .sw.custom{background:conic-gradient(#c8264a,#f5a524,#0f8f84,#3b1f8f,#c8264a)}
+.install{background:var(--surface);border:2px solid var(--indigo);border-radius:18px;padding:12px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.install .txt{flex:1 1 200px;min-width:0;font-size:13.5px}
+.install b{font-family:var(--display);font-size:16px;display:block}
 </style>
 </head>
 <body>
@@ -194,6 +200,7 @@ input[inputmode]{direction:ltr;text-align:center;font-variant-numeric:tabular-nu
   </header>
 
   <div id="alert"></div>
+  <div class="install" id="installBox" hidden><div class="txt"><b>ثبّتي «سعري اليوم» على تلفونك</b><span id="installTxt">يفتح من أيقونة على الشاشة، ويعمل حتى بدون إنترنت.</span></div><button class="btn primary" id="installBtn">تثبيت</button><button class="btn icon" id="installX" aria-label="إغلاق">×</button></div>
 
   <div class="welcome" id="welcome" hidden>
     <h2>أهلاً بكِ في سعري اليوم 👋</h2>
@@ -640,6 +647,20 @@ renderList=function(){
     card.querySelector('.cp-top').style.background=`linear-gradient(120deg,${t[0]},${t[1]})`;
     card.style.setProperty('--b1',t[2][0]);card.style.setProperty('--b2',t[2][1]);card.style.setProperty('--b3',t[2][2])}
 };
+
+// ---- install as app + offline ----
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}
+let deferredPrompt=null;
+const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
+const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+function showInstall(){if(standalone||S.hideInstall)return;$('installBox').hidden=false;
+  if(isIOS){$('installTxt').textContent='اضغطي زر المشاركة ⬆️ في سفاري ← «إضافة إلى الشاشة الرئيسية».';$('installBtn').hidden=true}}
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;showInstall()});
+if(isIOS)showInstall();
+$('installBtn').onclick=async()=>{if(!deferredPrompt){toast('من قائمة Chrome ⋮ اختاري «إضافة إلى الشاشة الرئيسية»');return}
+  deferredPrompt.prompt();const r=await deferredPrompt.userChoice;deferredPrompt=null;if(r.outcome==='accepted'){$('installBox').hidden=true;toast('تم التثبيت 🎉')}};
+$('installX').onclick=()=>{S.hideInstall=true;save();$('installBox').hidden=true};
+window.addEventListener('appinstalled',()=>{$('installBox').hidden=true});
 const _renderAll=renderAll;
 renderAll=function(){_renderAll();renderWelcome();renderSales()};
 const _soft=soft;soft=function(){_soft();if(!$('t-sales').hidden)renderSales()};
