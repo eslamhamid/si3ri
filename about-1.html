@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0c2a2b">
+<title>سعري اليوم</title>
+<meta name="description" content="أداة تسعير لأصحاب المشاريع: اكتب سعر الدولار اليوم وأسعارك الجديدة جاهزة في دقيقة.">
+<meta property="og:title" content="سعري اليوم">
+<meta property="og:description" content="الدولار تغيّر؟ حدّث أسعارك في دقيقة. جرّبها مجاناً.">
+<meta property="og:image" content="icon-512.png">
+<link rel="icon" href="icon-192.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lalezar&family=Tajawal:wght@400;500;700;800&display=swap">
+<style>
+/* Concept: a market price tag. Nile-ink ground, saffron numerals, karkade only for the action that matters. */
+:root{--bg:#eef2ef;--surface:#fff;--ink:#0c2a2b;--muted:#546b68;--line:#cfdad4;--gold:#e8a317;--sun:#f6c453;--karkade:#b5173b;--nile:#1c7a6e;
+  --display:"Lalezar","Tajawal",Tahoma,sans-serif;--body:"Tajawal",Tahoma,sans-serif}
+@media (prefers-color-scheme:dark){:root{--bg:#071a1b;--surface:#0f2a2b;--ink:#eaf3ef;--muted:#9fb8b2;--line:#244848;--karkade:#ff6a88;--nile:#46c2b2}}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 var(--body)}
+.wrap{max-width:620px;margin:0 auto;padding:0 max(18px,env(safe-area-inset-left)) 48px}
+h1,h2,h3{margin:0;font-family:var(--display);font-weight:400;text-wrap:balance;line-height:1.3}
+.num{font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+
+/* hero: the hanging tag */
+.hero{padding-top:0;display:grid;justify-items:stretch}
+.string{width:2px;height:34px;background:var(--ink);opacity:.45;margin:0 auto}
+.tag{background:#0c2a2b;color:#eaf3ef;border-radius:8px 8px 26px 26px;padding:34px 22px 22px;position:relative;
+  -webkit-mask:radial-gradient(circle 10px at 50% 20px,transparent 98%,#000 100%);mask:radial-gradient(circle 10px at 50% 20px,transparent 98%,#000 100%)}
+.tag h1{font-size:46px}
+.tag .lead{margin:6px 0 0;font-size:19px;opacity:.88;max-width:30ch}
+.board{margin-top:22px;border-top:1px solid rgba(255,255,255,.18)}
+.board .rate{display:flex;justify-content:space-between;align-items:baseline;padding:14px 0 8px;font-size:14px;opacity:.85}
+.board .big{font:400 60px/1 var(--display);color:var(--sun);opacity:1}
+.line{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:10px 0;border-top:1px dashed rgba(255,255,255,.22)}
+.line b{font-weight:600;font-size:18px}.line b small{font-weight:500;font-size:12.5px;opacity:.7}
+.line s{opacity:.55;font-size:13px;margin-inline-start:8px}
+.eg{font-size:12.5px;opacity:.6;margin-top:4px}
+.cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.btn{display:inline-flex;align-items:center;justify-content:center;font:700 16px var(--body);border-radius:8px;padding:13px 20px;text-decoration:none;border:0;cursor:pointer;flex:1 1 150px}
+.b1{background:var(--karkade);color:#fff}.b2{background:transparent;color:inherit;border:1px solid rgba(255,255,255,.4)}.b3{background:var(--ink);color:var(--bg)}
+.on-light.b2{border-color:var(--ink)}
+
+section{padding-top:52px}
+section>h2{font-size:28px;margin-bottom:14px}
+.lede{margin:0;color:var(--muted);max-width:60ch}
+.problem{border-inline-start:6px solid var(--gold);padding-inline-start:16px}
+.problem p{margin:0}.problem p+p{margin-top:10px;color:var(--muted)}
+.problem strong{font:400 24px/1.5 var(--display);display:block}
+
+.steps{list-style:none;margin:0;padding:0;counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:44px 1fr;gap:10px;padding:16px 0;border-top:1px solid var(--line);align-items:start}
+.steps li:last-child{border-bottom:1px solid var(--line)}
+.steps li::before{content:counter(s);font:400 36px/1 var(--display);color:var(--gold)}
+.steps b{font-weight:400;font-family:var(--display);font-size:19px;display:block}.steps span{color:var(--muted)}
+
+.feat{margin:0;padding:0;list-style:none;border-top:2px solid var(--ink)}
+.feat li{display:grid;grid-template-columns:130px 1fr;gap:14px;padding:13px 0;border-bottom:1px solid var(--line)}
+.feat b{font-weight:400;font-family:var(--display);font-size:17px;line-height:1.5}.feat span{color:var(--muted);font-size:15px}
+.feat .pro{color:var(--karkade);font-size:12.5px;font-weight:700;display:block;font-family:var(--body)}
+@media (max-width:420px){.feat li{grid-template-columns:1fr;gap:2px}}
+
+.plans{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:480px){.plans{grid-template-columns:1fr}}
+.plan{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:grid;gap:10px;align-content:start}
+.plan.pro{background:#0c2a2b;color:#eaf3ef;border-color:#0c2a2b}
+.plan h3{font-size:22px}.price{font:400 36px/1.1 var(--display)}.plan.pro .price{color:var(--sun)}
+.plan ul{margin:0;padding:0;list-style:none;display:grid;gap:6px;font-size:15px}
+.plan li{padding-top:6px;border-top:1px dashed color-mix(in srgb,currentColor 25%,transparent)}
+.plan .btn{margin-top:4px}
+
+.buy{margin-top:14px;border:1px dashed var(--ink);border-radius:10px;padding:18px;display:grid;gap:10px}
+.buy h3{font-size:20px}.buy ol{margin:0;padding-inline-start:22px;display:grid;gap:6px}
+.faq details{border-top:1px solid var(--line);padding:14px 0}.faq details:last-of-type{border-bottom:1px solid var(--line)}
+.faq summary{font:400 19px var(--display);cursor:pointer}.faq p{margin:8px 0 0;color:var(--muted)}
+.end{margin-top:52px;background:#0c2a2b;color:#eaf3ef;border-radius:10px;padding:26px 20px;display:grid;gap:12px;text-align:start}
+.end h2{font-size:26px}.end p{margin:0;opacity:.8}
+footer{margin-top:24px;text-align:center;color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="string" aria-hidden="true"></div>
+    <div class="tag">
+      <h1>سعري اليوم</h1>
+      <p class="lead">الدولار تغيّر؟ اكتب سعره، وأسعار كل منتجاتك تتحدّث في دقيقة.</p>
+      <div class="board" role="img" aria-label="مثال: سعر الدولار 8,400 وثلاثة منتجات بأسعار جديدة">
+        <div class="rate"><span>سعر الدولار اليوم</span><span class="big num">8,400</span></div>
+        <div class="line"><b>كعك <small>علبة كيلو</small></b><span><b class="num">36,500</b><s class="num">32,000</s></span></div>
+        <div class="line"><b>عطر <small>12 مل</small></b><span><b class="num">25,000</b><s class="num">22,000</s></span></div>
+        <div class="line"><b>بخور <small>علبة</small></b><span><b class="num">18,500</b><s class="num">16,000</s></span></div>
+        <div class="eg">مثال توضيحي بأرقام تجريبية</div>
+      </div>
+      <div class="cta"><a class="btn b1" href="./">جرّبها مجاناً</a><a class="btn b2" id="waTop" href="#buy">النسخة المميزة</a></div>
+    </div>
+  </header>
+
+  <section>
+    <h2>أسعارك ثابتة، والدولار لا</h2>
+    <div class="problem">
+      <strong>لو بعت بسعر آخر شراء، قد تخسر في كل قطعة وأنت لا تدري.</strong>
+      <p>ولو رفعت أكثر من اللازم، يذهب الزبون لغيرك. «سعري اليوم» يحسب السعر على تكلفة إعادة الشراء اليوم، ويضيف هامش أمان يحمي ربحك.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>كيف تعمل</h2>
+    <ol class="steps">
+      <li><div><b>سجّل خاماتك</b><span>اسم الخامة وسعر شرائها، مرة واحدة.</span></div></li>
+      <li><div><b>ركّب منتجاتك</b><span>حدد خامات كل منتج، وأجر عملك، ونسبة ربحك.</span></div></li>
+      <li><div><b>اكتب سعر الدولار</b><span>تظهر قائمتك الجديدة، وترسلها لزبائنك على واتساب.</span></div></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>ماذا تحصل عليه</h2>
+    <ul class="feat">
+      <li><b>التسعير بالدولار</b><span>رقم واحد يحدّث كل الأسعار، مع هامش أمان ونسبة ربح لكل منتج.</span></li>
+      <li><b>تنبيه الأسعار القديمة</b><span>يظهر لك عندما يتحرك الدولار أكثر من النسبة التي تحددها.</span></li>
+      <li><b>قوالب التصميم <em class="pro">المميزة</em></b><span>11 قالباً: قائمة أسعار، عرض، بكج، أحجام، فاتورة، ستوري. بشعارك وألوانك.</span></li>
+      <li><b>الطلبات <em class="pro">المميزة</em></b><span>موعد التسليم، ومن دفع ومن لم يدفع، ورسالة واتساب جاهزة للزبون.</span></li>
+      <li><b>الزبائن <em class="pro">المميزة</em></b><span>أرقامهم وعدد طلباتهم وما عليهم، وواتساب بضغطة.</span></li>
+      <li><b>المخزون <em class="pro">المميزة</em></b><span>ينبهك قبل أن تنتهي الخامة، ويخبرك كم قطعة تقدر تصنع.</span></li>
+      <li><b>صافي الربح <em class="pro">المميزة</em></b><span>مبيعاتك وتكلفتك وربحك لكل شهر.</span></li>
+      <li><b>بدون إنترنت</b><span>تعمل على التلفون حتى والشبكة ضعيفة.</span></li>
+    </ul>
+  </section>
+
+  <section id="buy">
+    <h2>الأسعار</h2>
+    <div class="plans">
+      <div class="plan"><h3>المجانية</h3><div class="price">مجاناً</div>
+        <ul><li>التسعير بسعر الدولار</li><li>تنبيه الأسعار القديمة</li><li>قالب قائمة أسعار واحد</li><li>نسخة احتياطية</li></ul>
+        <a class="btn b3" href="./">ابدأ مجاناً</a></div>
+      <div class="plan pro"><h3>المميزة</h3><div class="price" id="proPrice">تواصل معنا</div>
+        <ul><li>كل ما في المجانية</li><li>11 قالباً وشعارك وألوانك</li><li>الطلبات والزبائن والمخزون</li><li>صافي الربح الشهري</li><li>صور بدون علامة الأداة</li><li>دفعة واحدة، وتفعيل دائم لجهازك</li></ul></div>
+    </div>
+    <div class="buy">
+      <h3>كيف تشتري</h3>
+      <ol>
+        <li>افتح الأداة، ثم <b>الإعدادات</b>، وانسخ <b>رقم جهازك</b>.</li>
+        <li>حوّل المبلغ عبر <b>بنكك</b>.</li>
+        <li>أرسل الإيصال ورقم جهازك على واتساب<span id="waNumTxt"></span>.</li>
+        <li>يصلك كود التفعيل، اكتبه في الإعدادات.</li>
+      </ol>
+      <a class="btn b1" id="waBuy" href="./" hidden>تواصل على واتساب</a>
+    </div>
+  </section>
+
+  <section class="faq">
+    <h2>أسئلة شائعة</h2>
+    <details><summary>هل أحتاج تحميل تطبيق؟</summary><p>لا. تفتح الرابط من المتصفح، وتقدر تثبّتها على شاشة تلفونك مثل أي تطبيق.</p></details>
+    <details><summary>أين تُحفظ بياناتي؟</summary><p>على تلفونك فقط، ولا يراها أحد غيرك. احفظ نسخة احتياطية من الإعدادات كل فترة.</p></details>
+    <details><summary>هل تعمل بغير الجنيه؟</summary><p>نعم. تكتب اسم عملتك في الإعدادات، والحساب يكون مقابل الدولار.</p></details>
+    <details><summary>لو غيّرت التلفون؟</summary><p>انقل بياناتك بالنسخة الاحتياطية، وتواصل معنا لكود تفعيل للجهاز الجديد.</p></details>
+  </section>
+
+  <div class="end">
+    <h2>جرّب بمنتج واحد الآن</h2>
+    <p>لا حساب ولا تسجيل. تكتب سعر الدولار وترى النتيجة.</p>
+    <a class="btn b1" href="./">افتح سعري اليوم</a>
+  </div>
+  <footer>سعري اليوم · <span class="num">eslamhamid.github.io/si3ri</span></footer>
+</div>
+<script>
+// ← نفس إعدادات الأداة: رقم الواتساب بالصيغة الدولية وسعر النسخة المميزة
+const CONFIG={whatsapp:'249919925650',price:'15,000 جنيه'};
+const num=String(CONFIG.whatsapp).replace(/\D/g,'');
+if(CONFIG.price)document.getElementById('proPrice').textContent=CONFIG.price;
+if(num){const l='https://wa.me/'+num+'?text='+encodeURIComponent('السلام عليكم، أريد النسخة المميزة من «سعري اليوم»');
+  const b=document.getElementById('waBuy');b.href=l;b.hidden=false;b.target='_blank';
+  document.getElementById('waNumTxt').innerHTML=': <span class="num">'+CONFIG.whatsapp+'</span>';
+  const t=document.getElementById('waTop');t.href=l;t.target='_blank'}
+</script>
+</body>
+</html>
