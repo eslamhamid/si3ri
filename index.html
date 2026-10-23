@@ -142,6 +142,37 @@ input[inputmode]{direction:ltr;text-align:center;font-variant-numeric:tabular-nu
 .toast{position:fixed;inset:auto 0 calc(16px + env(safe-area-inset-bottom,0px)) 0;margin:auto;width:max-content;max-width:90%;background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;font-weight:600;z-index:20}
 @media (max-width:380px){.grid3{grid-template-columns:1fr 1fr}.grid3 .field:first-child{grid-column:1/-1}}
 @media (prefers-reduced-motion:no-preference){.card-price,.alert{animation:pop .35s ease-out}@keyframes pop{from{transform:translateY(6px)}to{transform:none}}}
+
+.tabs{grid-template-columns:repeat(5,1fr)}
+.tab{font-size:12.5px;padding:9px 2px}
+.welcome{background:linear-gradient(135deg,color-mix(in srgb,var(--saffron) 22%,var(--surface)),var(--surface));border:2px solid var(--saffron);border-radius:20px;padding:16px;display:grid;gap:10px}
+.welcome h2{font-size:20px}
+.steps{display:grid;gap:8px;margin:0;padding:0;list-style:none;counter-reset:s}
+.steps li{display:flex;gap:10px;align-items:flex-start;counter-increment:s}
+.steps li::before{content:counter(s);flex:none;width:26px;height:26px;border-radius:50%;background:var(--indigo);color:#fff;display:grid;place-items:center;font-weight:700;font-size:13px}
+.pro-badge{display:inline-flex;align-items:center;gap:4px;background:linear-gradient(120deg,#f5a524,#ffd166);color:#1d1440;font-weight:800;font-size:11.5px;padding:2px 9px;border-radius:999px}
+.locked{position:relative;opacity:.55;pointer-events:none;filter:grayscale(.3)}
+.lockbox{background:var(--surface);border:2px dashed var(--saffron);border-radius:18px;padding:16px;display:grid;gap:10px;text-align:center;justify-items:center}
+.lockbox b{font-family:var(--display);font-size:18px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px;display:grid;gap:2px;text-align:center;min-width:0}
+.stat span{font-size:12px;color:var(--muted)}
+.stat b{font:800 17px var(--body);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.stat.profit b{color:var(--nile)}
+.sale{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--line)}
+.sale:last-child{border-bottom:0}
+.sale .meta{font-size:12px;color:var(--muted)}
+.list{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.logo-prev{width:56px;height:56px;border-radius:14px;object-fit:cover;background:var(--surface-2);border:1px solid var(--line)}
+.cp-top{display:flex;gap:12px;align-items:center}
+.cp-logo{width:58px;height:58px;border-radius:14px;object-fit:cover;background:#fff;flex:none}
+.cp-wm{font-size:11px;color:#8a7f9d;text-align:center;padding:0 18px 8px;background:#fff1d6}
+.upgrade{background:linear-gradient(135deg,#3b1f8f,#6a2bb8 60%,#c8264a);color:#fff;border-radius:20px;padding:18px;display:grid;gap:10px}
+.upgrade h3{font-size:21px}
+.upgrade ul{margin:0;padding-inline-start:20px;display:grid;gap:4px}
+.upgrade input{background:#fff;color:#1d1440;direction:ltr;text-align:center;letter-spacing:1px;font-weight:700}
+.upgrade .hint{color:rgba(255,255,255,.85)}
+.pro-on{background:color-mix(in srgb,var(--nile) 14%,var(--surface));border:2px solid var(--nile);border-radius:18px;padding:14px;font-weight:600}
 </style>
 </head>
 <body>
@@ -161,8 +192,19 @@ input[inputmode]{direction:ltr;text-align:center;font-variant-numeric:tabular-nu
 
   <div id="alert"></div>
 
+  <div class="welcome" id="welcome" hidden>
+    <h2>أهلاً بكِ في سعري اليوم 👋</h2>
+    <ol class="steps">
+      <li><span>من «خاماتي» اكتبي خاماتك وسعر شرائها، وسعر الدولار يوم اشتريتِها.</span></li>
+      <li><span>من «منتجاتي» حددي خامات كل منتج، وأجر عملك، ونسبة ربحك.</span></li>
+      <li><span>كل يوم اكتبي سعر الدولار في الخانة الصفراء، وأرسلي قائمتك الجديدة لزبائنك.</span></li>
+    </ol>
+    <div class="btn-row"><button class="btn primary" id="startOwn">ابدئي ببياناتي</button><button class="btn ghost" id="tryEx">أجرّب المثال أولاً</button></div>
+  </div>
+
   <nav class="tabs" role="tablist">
     <button class="tab" role="tab" data-t="list" aria-selected="true">قائمتي</button>
+    <button class="tab" role="tab" data-t="sales" aria-selected="false">مبيعاتي</button>
     <button class="tab" role="tab" data-t="prods" aria-selected="false">منتجاتي</button>
     <button class="tab" role="tab" data-t="mats" aria-selected="false">خاماتي</button>
     <button class="tab" role="tab" data-t="set" aria-selected="false">الإعدادات</button>
@@ -172,9 +214,8 @@ input[inputmode]{direction:ltr;text-align:center;font-variant-numeric:tabular-nu
     <p class="example" id="exNote">هذه بيانات مثال للتجربة فقط. عدّليها من «خاماتي» و«منتجاتي» لتصبح أسعارك أنتِ.</p>
     <div id="card"></div>
     <div class="btn-row">
-      <button class="btn primary" id="imgBtn">إرسال القائمة كصورة</button>
-      <button class="btn nile" id="copyBtn">نسخ القائمة كنص</button>
       <button class="btn primary" id="imgBtn">مشاركة كصورة</button>
+      <button class="btn nile" id="copyBtn">نسخ القائمة كنص</button>
       <button class="btn saffron" id="saveBtn">اعتمدي هذه الأسعار</button>
     </div>
     
@@ -183,6 +224,32 @@ input[inputmode]{direction:ltr;text-align:center;font-variant-numeric:tabular-nu
       <span style="--c:var(--indigo)">خامات</span><span style="--c:var(--saffron)">أجر العمل</span><span style="--c:var(--karkade)">هامش الأمان</span><span style="--c:var(--nile)">ربحك</span>
     </div>
     <div class="breakdown" id="breakdown"></div>
+  </section>
+
+  <section id="t-sales" hidden>
+    <div class="sec-head"><h2>مبيعاتي <span class="pro-badge">مميزة</span></h2></div>
+    <div id="salesLock" class="lockbox" hidden>
+      <b>اعرفي ربحك الحقيقي كل شهر</b>
+      <p class="hint">سجّلي كل بيعة بضغطة، والأداة تحسب لك المبيعات والتكلفة وصافي الربح للشهر.</p>
+      <button class="btn saffron" data-goto="set">فعّلي النسخة المميزة</button>
+    </div>
+    <div id="salesBox">
+      <div class="panel">
+        <div class="grid3">
+          <div class="field"><label for="saleProd">المنتج</label><select id="saleProd"></select></div>
+          <div class="field"><label for="saleQty">العدد</label><input id="saleQty" inputmode="decimal" value="1"></div>
+          <div class="field"><label for="salePrice">سعر القطعة</label><input id="salePrice" inputmode="decimal"></div>
+        </div>
+        <button class="btn primary" id="addSale">+ سجّلي البيعة</button>
+      </div>
+      <p class="hint" id="monthLbl" style="margin-top:12px"></p>
+      <div class="stats" style="margin-top:6px">
+        <div class="stat"><span>المبيعات</span><b class="num" id="stRev">0</b></div>
+        <div class="stat"><span>التكلفة</span><b class="num" id="stCost">0</b></div>
+        <div class="stat profit"><span>صافي الربح</span><b class="num" id="stProfit">0</b></div>
+      </div>
+      <div class="list" id="salesList" style="margin-top:12px"></div>
+    </div>
   </section>
 
   <section id="t-prods" hidden>
@@ -211,8 +278,24 @@ input[inputmode]{direction:ltr;text-align:center;font-variant-numeric:tabular-nu
         <div class="field"><label for="alertPct">نبّهني إذا تحرّك الدولار %</label><input id="alertPct" inputmode="decimal"></div>
       </div>
       <p class="hint">هامش الأمان يحميكِ لو ارتفع الدولار قبل أن تشتري الخامات مرة ثانية.</p>
-      <div class="field"><label>لون قائمة الأسعار</label>
+      <div class="field"><label>لون قائمة الأسعار <span class="pro-badge">مميزة</span></label>
         <div class="swatches" id="swatches"></div></div>
+      <div class="field"><label>شعار مشروعك على القائمة <span class="pro-badge">مميزة</span></label>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <img class="logo-prev" id="logoPrev" alt="" hidden>
+          <label class="btn ghost small" for="logoIn" id="logoLbl">اختاري صورة الشعار</label>
+          <input type="file" id="logoIn" accept="image/*" hidden>
+          <button class="btn ghost small" id="logoDel" hidden>إزالة الشعار</button>
+        </div></div>
+    </div>
+
+    <div id="proBox"></div>
+
+    <div class="panel">
+      <b>نسخة احتياطية</b>
+      <p class="hint">احفظي ملفاً فيه كل خاماتك ومنتجاتك ومبيعاتك، حتى لا تضيع لو غيّرتِ التلفون أو مسحتِ المتصفح.</p>
+      <div class="btn-row"><button class="btn nile" id="backupBtn">حفظ نسخة احتياطية</button><label class="btn ghost" for="restoreIn">استرجاع من ملف</label></div>
+      <input type="file" id="restoreIn" accept=".json,application/json,text/plain" hidden>
     </div>
     <div class="panel">
       <b>البدء من جديد</b>
@@ -220,7 +303,7 @@ input[inputmode]{direction:ltr;text-align:center;font-variant-numeric:tabular-nu
       <div class="btn-row"><button class="btn ghost" id="clearBtn">مسح المثال</button><button class="btn ghost" id="resetBtn">إرجاع المثال</button></div>
       <p class="hint" id="clearConfirm" hidden>متأكدة؟ <button class="btn primary small" id="clearYes">نعم امسحي</button></p>
     </div>
-    <p class="hint">بياناتك محفوظة على هذا الجهاز فقط.</p>
+    <p class="hint">بياناتك محفوظة على هذا الجهاز فقط. احفظي نسخة احتياطية كل فترة.</p>
   </section>
 </div>
 <div class="toast" id="toast" hidden></div>
@@ -350,11 +433,7 @@ function touch(){S.example=false}
 // ---- events ----
 $('rateNow').addEventListener('input',e=>{S.rate=n(e.target.value);save();soft()});
 $('rateNow').addEventListener('blur',renderHeader);
-document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{
-  document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected',x===b));
-  ['list','prods','mats','set'].forEach(t=>$('t-'+t).hidden=t!==b.dataset.t);
-  if(b.dataset.t!=='list')renderAll();
-}));
+
 function applyPrices(){S.lastRate=S.rate;S.lastDate=today();save();renderAll();toast('تم اعتماد الأسعار الجديدة')}
 $('saveBtn').onclick=applyPrices;
 $('alert').addEventListener('click',e=>{if(e.target.closest('[data-act="apply"]'))applyPrices()});
@@ -387,91 +466,152 @@ $('addProd').onclick=()=>{S.prods.push({id:uid(),name:'منتج جديد',yield:
 $('round').onchange=e=>{S.round=n(e.target.value);save();soft()};
 $('swatches').addEventListener('click',e=>{const b=e.target.closest('[data-theme-pick]');if(!b)return;S.theme=b.dataset.themePick;save();renderSet();renderList()});
 $('clearBtn').onclick=()=>$('clearConfirm').hidden=false;
-$('clearYes').onclick=()=>{S.mats=[];S.prods=[];S.example=false;S.lastRate=0;S.biz='';$('clearConfirm').hidden=true;save();renderAll();toast('تم المسح، ابدئي بخاماتك')};
-$('resetBtn').onclick=()=>{S=sample();save();renderAll();toast('رجع المثال')};
-// ---- price list as image (canvas keeps Arabic letters joined) ----
-const TH={indigo:['#3b1f8f','#6a2bb8',['#f5a524','#c8264a','#0f8f84']],karkade:['#9b1238','#e2456b',['#ffd166','#3b1f8f','#ffffff']],nile:['#05665e','#16b3a5',['#f5a524','#ffffff','#3b1f8f']],saffron:['#c26a00','#f5a524',['#3b1f8f','#ffffff','#c8264a']]};
-async function drawCard(){
-  try{await document.fonts.ready}catch(e){}
-  const W=1080,P=64,rowH=120,rows=S.prods.length||1,H=260+24+40+rows*rowH+40+100;
-  const c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
-  const t=TH[S.theme]||TH.indigo;
-  const g=x.createLinearGradient(W,0,0,260);g.addColorStop(0,t[0]);g.addColorStop(1,t[1]);
-  x.fillStyle=g;x.fillRect(0,0,W,260);
-  x.direction='rtl';x.textAlign='right';x.fillStyle='#fff';
-  x.font='700 72px "Aref Ruqaa", "El Messiri", serif';x.fillText(S.biz||'قائمة الأسعار',W-P,130);
-  x.font='500 34px "Tajawal", Tahoma, sans-serif';x.globalAlpha=.9;x.fillText('قائمة الأسعار · '+today(),W-P,200);x.globalAlpha=1;
-  for(let i=0;i*36<W;i++){x.fillStyle=t[2][i%3];x.fillRect(i*36,260,36,24)}
-  x.fillStyle='#fffaf0';x.fillRect(0,284,W,H-284-100);
-  let y=284+40;
-  S.prods.forEach((p,i)=>{
-    const pr=prodCalc(p,S.rate).price;
-    x.textAlign='right';x.fillStyle='#1d1440';x.font='700 40px "El Messiri", Tahoma, sans-serif';
-    x.fillText(p.name,W-P,y+70,W*0.55);
-    x.textAlign='left';x.font='700 46px "Tajawal", Tahoma, sans-serif';
-    const num=fmt(pr);x.direction='ltr';x.fillText(num,P,y+70);
-    const nw=x.measureText(num).width;x.direction='rtl';x.font='600 30px "Tajawal", Tahoma, sans-serif';x.fillStyle='#6b5f86';
-    x.textAlign='left';x.fillText(S.cur,P+nw+14,y+70);
-    if(i<S.prods.length-1){x.strokeStyle='#e8d9b8';x.setLineDash([10,8]);x.lineWidth=2;x.beginPath();x.moveTo(P,y+rowH);x.lineTo(W-P,y+rowH);x.stroke();x.setLineDash([])}
-    y+=rowH;
-  });
-  x.fillStyle='#fff1d6';x.fillRect(0,H-100,W,100);
-  x.fillStyle='#6b5f86';x.textAlign='center';x.direction='rtl';x.font='500 30px "Tajawal", Tahoma, sans-serif';
-  x.fillText('الأسعار سارية لليوم وقابلة للتغيير',W/2,H-40);
-  return new Promise(r=>c.toBlob(r,'image/png'));
+$('clearYes').onclick=()=>{S.mats=[];S.prods=[];S.sales=[];S.example=false;S.lastRate=0;S.biz='';$('clearConfirm').hidden=true;save();renderAll();toast('تم المسح، ابدئي بخاماتك')};
+$('resetBtn').onclick=()=>{const keep={pro:S.pro,proCode:S.proCode};S=Object.assign(sample(),keep,{sales:[],seenWelcome:true});save();renderAll();toast('رجع المثال')};
+// ================= launch features =================
+const APP_URL='eslamhamid.github.io/si3ri';
+const CONFIG={whatsapp:'',price:''}; // يُملأ لاحقاً: رقم الواتساب وسعر النسخة المميزة
+S.sales=S.sales||[];
+if(S.seenWelcome===undefined)S.seenWelcome=false;
+
+// --- activation codes: SR-XXXX-YYYY ---
+function chk(a){let h=5381;const t=a+'|si3ri-2026';for(const ch of t)h=((h*33)^ch.charCodeAt(0))>>>0;return String(h%10000).padStart(4,'0')}
+function validCode(c){const m=/^SR-(\d{4})-(\d{4})$/.exec(String(c).trim().toUpperCase());return !!m&&chk(m[1])===m[2]}
+const isPro=()=>!!S.pro;
+
+// --- welcome ---
+function renderWelcome(){$('welcome').hidden=!!S.seenWelcome}
+$('startOwn').onclick=()=>{S.mats=[];S.prods=[];S.example=false;S.lastRate=0;S.biz='';S.seenWelcome=true;save();renderAll();goTab('mats');toast('ابدئي بإضافة أول خامة')};
+$('tryEx').onclick=()=>{S.seenWelcome=true;save();renderWelcome()};
+function goTab(t){document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected',x.dataset.t===t));['list','sales','prods','mats','set'].forEach(k=>$('t-'+k).hidden=k!==t);renderAll();window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>goTab(b.dataset.t));
+document.addEventListener('click',e=>{const g=e.target.closest('[data-goto]');if(g)goTab(g.dataset.goto)});
+
+// --- pro gating: colors + logo ---
+const _renderSet=renderSet;
+renderSet=function(){
+  _renderSet();
+  document.querySelectorAll('[data-theme-pick]').forEach(b=>{if(!isPro()&&b.dataset.themePick!=='indigo'){b.textContent='🔒';b.style.fontSize='16px'}});
+  $('logoPrev').hidden=!S.logo;if(S.logo)$('logoPrev').src=S.logo;
+  $('logoDel').hidden=!S.logo;
+  renderPro();
+};
+$('swatches').onclick=null;
+$('swatches').addEventListener('click',e=>{const b=e.target.closest('[data-theme-pick]');if(!b)return;e.stopImmediatePropagation();
+  if(!isPro()&&b.dataset.themePick!=='indigo'){toast('الألوان الإضافية في النسخة المميزة');return}
+  S.theme=b.dataset.themePick;save();renderSet();renderList()},true);
+$('logoLbl').addEventListener('click',e=>{if(!isPro()){e.preventDefault();toast('الشعار متاح في النسخة المميزة')}});
+$('logoIn').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();
+  r.onload=()=>{const im=new Image();im.onload=()=>{const z=240,c=document.createElement('canvas');c.width=c.height=z;const x=c.getContext('2d');
+    const s0=Math.min(im.width,im.height);x.drawImage(im,(im.width-s0)/2,(im.height-s0)/2,s0,s0,0,0,z,z);
+    S.logo=c.toDataURL('image/jpeg',.85);save();renderSet();renderList();toast('تم إضافة الشعار')};im.src=r.result};r.readAsDataURL(f);e.target.value=''};
+$('logoDel').onclick=()=>{S.logo='';save();renderSet();renderList()};
+
+// --- upgrade box ---
+function renderPro(){
+  if(isPro()){$('proBox').innerHTML='<div class="pro-on">✅ النسخة المميزة مفعّلة: الألوان، الشعار، سجل المبيعات، والصورة بدون علامة الأداة.</div>';return}
+  const how=CONFIG.whatsapp?`حوّلي ${CONFIG.price?esc(CONFIG.price)+' ':''}عبر بنكك، وأرسلي الإيصال على واتساب: <span class="num">${esc(CONFIG.whatsapp)}</span>، ويصلك كود التفعيل.`:'تواصلي مع صاحبة الأداة لتحصلي على كود التفعيل.';
+  $('proBox').innerHTML=`<div class="upgrade"><h3>النسخة المميزة <span class="pro-badge">مميزة</span></h3>
+    <ul><li>قائمة أسعار بشعار مشروعك وألوانك</li><li>صورة القائمة بدون علامة الأداة</li><li>سجل المبيعات وصافي ربحك كل شهر</li></ul>
+    <p class="hint">${how}</p>
+    <div class="field"><label for="codeIn" style="color:#fff">كود التفعيل</label><input id="codeIn" placeholder="SR-0000-0000" autocomplete="off"></div>
+    <button class="btn saffron" id="codeBtn">فعّلي</button></div>`;
+  $('codeBtn').onclick=()=>{const v=$('codeIn').value;if(validCode(v)){S.pro=true;S.proCode=v.trim().toUpperCase();save();renderAll();toast('🎉 تم تفعيل النسخة المميزة')}else toast('الكود غير صحيح، تأكدي من كتابته')};
 }
-$('imgBtn').onclick=async()=>{
-  const b=await drawCard();if(!b){toast('تعذّر تجهيز الصورة');return}
-  const f=new File([b],'قائمة-الأسعار.png',{type:'image/png'});
-  if(navigator.canShare&&navigator.canShare({files:[f]})){
-    try{await navigator.share({files:[f],title:'قائمة الأسعار'});return}catch(e){if(e.name==='AbortError')return}
-  }
-  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='price-list.png';document.body.appendChild(a);a.click();a.remove();
-  toast('تم حفظ الصورة في التلفون');
+
+// --- price card with logo + watermark ---
+const _renderList=renderList;
+renderList=function(){
+  _renderList();
+  const top=document.querySelector('.cp-top');
+  if(top&&isPro()&&S.logo){const im=document.createElement('img');im.className='cp-logo';im.src=S.logo;im.alt='';top.prepend(im)}
+  const card=document.querySelector('.card-price');
+  if(card&&!isPro()){const w=document.createElement('div');w.className='cp-wm';w.textContent='صُنعت بأداة سعري اليوم · '+APP_URL;card.appendChild(w)}
 };
 
-// ---- price list as image ----
-const THEMES={indigo:['#3b1f8f','#6a2bb8',['#f5a524','#c8264a','#0f8f84']],karkade:['#9b1238','#e2456b',['#ffd166','#3b1f8f','#ffffff']],nile:['#05665e','#16b3a5',['#f5a524','#ffffff','#3b1f8f']],saffron:['#c26a00','#f5a524',['#3b1f8f','#ffffff','#c8264a']]};
+// --- sales log ---
+const monthKey=d=>d.slice(0,7);
+function renderSales(){
+  $('salesLock').hidden=isPro();$('salesBox').classList.toggle('locked',!isPro());
+  const sel=$('saleProd'),cur=sel.value;
+  sel.innerHTML=S.prods.map(p=>`<option value="${p.id}">${esc(p.name)}</option>`).join('');
+  if(cur&&S.prods.some(p=>p.id===cur))sel.value=cur;
+  const p=S.prods.find(x=>x.id===sel.value);
+  if(document.activeElement!==$('salePrice'))$('salePrice').value=p?prodCalc(p,S.rate).price:'';
+  const mk=monthKey(new Date().toISOString());
+  const ms=S.sales.filter(x=>monthKey(x.date)===mk);
+  const rev=ms.reduce((a,x)=>a+x.price*x.qty,0),cost=ms.reduce((a,x)=>a+x.cost*x.qty,0);
+  $('stRev').textContent=fmt(rev);$('stCost').textContent=fmt(cost);$('stProfit').textContent=fmt(rev-cost);
+  $('monthLbl').textContent='حساب شهر '+new Date().toLocaleDateString('ar-EG',{month:'long',year:'numeric'})+' ('+S.cur+')';
+  $('salesList').innerHTML=ms.slice().reverse().map(x=>`<div class="sale" data-sid="${x.id}"><div><b>${esc(x.name)}</b> × <span class="num">${x.qty}</span><div class="meta">${new Date(x.date).toLocaleDateString('ar-EG',{day:'numeric',month:'long'})} · ربح <span class="num">${fmt((x.price-x.cost)*x.qty)}</span></div></div><div style="display:flex;align-items:center;gap:4px"><b class="num">${fmt(x.price*x.qty)}</b><button class="btn icon" data-act="delSale" aria-label="حذف">×</button></div></div>`).join('')||'<p class="hint" style="padding:14px">لا توجد مبيعات هذا الشهر بعد.</p>';
+}
+$('saleProd').onchange=()=>{$('salePrice').value='';renderSales()};
+$('addSale').onclick=()=>{
+  if(!isPro())return;const p=S.prods.find(x=>x.id===$('saleProd').value);if(!p){toast('أضيفي منتجاً أولاً');return}
+  const q=n($('saleQty').value)||1,pr=n($('salePrice').value)||prodCalc(p,S.rate).price,c=prodCalc(p,S.rate).cost;
+  S.sales.push({id:uid(),date:new Date().toISOString(),pid:p.id,name:p.name,qty:q,price:pr,cost:c});
+  $('saleQty').value=1;save();renderSales();toast('تم تسجيل البيعة');
+};
+$('salesList').addEventListener('click',e=>{const b=e.target.closest('[data-act="delSale"]');if(!b)return;const id=b.closest('.sale').dataset.sid;S.sales=S.sales.filter(x=>x.id!==id);save();renderSales()});
+
+// --- backup / restore ---
+$('backupBtn').onclick=async()=>{
+  const data=JSON.stringify({app:'si3ri',v:2,saved:new Date().toISOString(),state:S});
+  const name='si3ri-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  const f=new File([data],name,{type:'application/json'});
+  try{if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:'نسخة احتياطية - سعري اليوم'});return}}catch(e){if(e.name==='AbortError')return}
+  const a=document.createElement('a');a.href=URL.createObjectURL(f);a.download=name;document.body.appendChild(a);a.click();a.remove();toast('تم حفظ النسخة في التنزيلات');
+};
+$('restoreIn').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();
+  r.onload=()=>{try{const d=JSON.parse(r.result);const st=d.state||d;if(!st.mats||!st.prods)throw 0;S=st;S.sales=S.sales||[];S.seenWelcome=true;save();renderAll();toast('تم استرجاع بياناتك')}catch(err){toast('الملف غير صالح، اختاري ملف النسخة الاحتياطية')}};
+  r.readAsText(f);e.target.value=''};
+
+// --- price list as image ---
+const TH={indigo:['#3b1f8f','#6a2bb8',['#f5a524','#c8264a','#0f8f84']],karkade:['#9b1238','#e2456b',['#ffd166','#3b1f8f','#ffffff']],nile:['#05665e','#16b3a5',['#f5a524','#ffffff','#3b1f8f']],saffron:['#c26a00','#f5a524',['#3b1f8f','#ffffff','#c8264a']]};
+const loadImg=src=>new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src});
 async function makeImage(){
   try{await document.fonts.ready}catch(e){}
-  const W=1080,rowH=120,top=260,foot=110,rows=Math.max(S.prods.length,1);
+  const W=1080,P=60,rowH=120,top=260,foot=isPro()?100:150,rows=Math.max(S.prods.length,1);
   const H=top+30+rows*rowH+30+foot;
   const c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
-  const [g1,g2,band]=THEMES[S.theme]||THEMES.indigo;
-  const gr=x.createLinearGradient(0,0,W,top);gr.addColorStop(0,g1);gr.addColorStop(1,g2);
-  x.fillStyle=gr;x.fillRect(0,0,W,top);
+  const [g1,g2,band]=TH[isPro()?S.theme:'indigo']||TH.indigo;
+  const gr=x.createLinearGradient(W,0,0,top);gr.addColorStop(0,g1);gr.addColorStop(1,g2);x.fillStyle=gr;x.fillRect(0,0,W,top);
   for(let k=0;k*36<W;k++){x.fillStyle=band[k%3];x.fillRect(k*36,top-24,36,24)}
   x.fillStyle='#fffaf0';x.fillRect(0,top,W,H-top);
-  x.direction='rtl';x.textAlign='right';x.textBaseline='middle';
-  x.fillStyle='#ffffff';x.font='700 72px "Aref Ruqaa","El Messiri",serif';
-  x.fillText(S.biz||'قائمة الأسعار',W-60,100);
-  x.globalAlpha=.9;x.font='500 34px "Tajawal",Tahoma,sans-serif';x.fillText('قائمة الأسعار · '+today(),W-60,175);x.globalAlpha=1;
+  let tx=W-P;
+  if(isPro()&&S.logo){const im=await loadImg(S.logo);if(im){x.save();x.beginPath();x.roundRect?x.roundRect(W-P-150,45,150,150,28):x.rect(W-P-150,45,150,150);x.clip();x.drawImage(im,W-P-150,45,150,150);x.restore();tx=W-P-180}}
+  x.direction='rtl';x.textAlign='right';x.textBaseline='middle';x.fillStyle='#ffffff';
+  x.font='700 70px "Aref Ruqaa","El Messiri",serif';x.fillText(S.biz||'قائمة الأسعار',tx,100,tx-P);
+  x.globalAlpha=.9;x.font='500 34px "Tajawal",Tahoma,sans-serif';x.fillText('قائمة الأسعار · '+today(),tx,175);x.globalAlpha=1;
   let y=top+30;
   S.prods.forEach((p,i)=>{
     const pr=prodCalc(p,S.rate).price;
-    x.textAlign='right';x.fillStyle='#1d1440';x.font='700 42px "El Messiri",Tahoma,sans-serif';
-    x.fillText(p.name,W-60,y+rowH/2);
-    x.textAlign='left';x.direction='ltr';x.font='700 46px "Tajawal",Tahoma,sans-serif';
-    const num=fmt(pr);x.fillText(num,60,y+rowH/2);
+    x.direction='rtl';x.textAlign='right';x.fillStyle='#1d1440';x.font='700 42px "El Messiri",Tahoma,sans-serif';
+    x.fillText(p.name,W-P,y+rowH/2,W*0.55);
+    x.direction='ltr';x.textAlign='left';x.font='700 46px "Tajawal",Tahoma,sans-serif';
+    const num=fmt(pr);x.fillText(num,P,y+rowH/2);
     const w=x.measureText(num).width;x.font='600 30px "Tajawal",Tahoma,sans-serif';x.fillStyle='#6b5f86';
-    x.direction='rtl';x.textAlign='left';x.fillText(S.cur,60+w+16,y+rowH/2+4);
-    if(i<S.prods.length-1){x.strokeStyle='#e8d9b8';x.setLineDash([10,8]);x.lineWidth=2;x.beginPath();x.moveTo(60,y+rowH);x.lineTo(W-60,y+rowH);x.stroke();x.setLineDash([])}
+    x.direction='rtl';x.textAlign='left';x.fillText(S.cur,P+w+16,y+rowH/2+4);
+    if(i<S.prods.length-1){x.strokeStyle='#e8d9b8';x.setLineDash([10,8]);x.lineWidth=2;x.beginPath();x.moveTo(P,y+rowH);x.lineTo(W-P,y+rowH);x.stroke();x.setLineDash([])}
     y+=rowH;
   });
   x.fillStyle='#fff1d6';x.fillRect(0,H-foot,W,foot);
   x.fillStyle='#6b5f86';x.textAlign='center';x.direction='rtl';x.font='500 30px "Tajawal",Tahoma,sans-serif';
-  x.fillText('الأسعار سارية لليوم وقابلة للتغيير',W/2,H-foot/2);
+  x.fillText('الأسعار سارية لليوم وقابلة للتغيير',W/2,H-foot+50);
+  if(!isPro()){x.font='500 24px "Tajawal",Tahoma,sans-serif';x.fillStyle='#8a7f9d';x.fillText('صُنعت بأداة سعري اليوم · '+APP_URL,W/2,H-foot+105)}
   return new Promise(r=>c.toBlob(r,'image/png'));
 }
 $('imgBtn').onclick=async()=>{
   const blob=await makeImage();if(!blob){toast('تعذّر صنع الصورة');return}
   const file=new File([blob],'qaimat-alasaar.png',{type:'image/png'});
-  try{
-    if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:S.biz||'قائمة الأسعار'});return}
-  }catch(e){if(e&&e.name==='AbortError')return}
+  try{if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:S.biz||'قائمة الأسعار'});return}}catch(e){if(e&&e.name==='AbortError')return}
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='qaimat-alasaar.png';document.body.appendChild(a);a.click();a.remove();
   toast('تم حفظ الصورة');
 };
+
+const _renderAll=renderAll;
+renderAll=function(){_renderAll();renderWelcome();renderSales()};
+const _soft=soft;soft=function(){_soft();if(!$('t-sales').hidden)renderSales()};
 renderAll();
 </script>
 
