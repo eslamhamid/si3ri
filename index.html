@@ -737,7 +737,7 @@ $('installX').onclick=()=>{S.hideInstall=true;save();$('installBox').hidden=true
 window.addEventListener('appinstalled',()=>{$('installBox').hidden=true});
 
 // ================= design templates v2 =================
-S.tpl=Object.assign({id:'classic',txt:{},discount:10,featured:'',hide:[],style:'auto',season:'none',
+S.tpl=Object.assign({id:'classic',txt:{},catLayout:'magazine',discount:10,featured:'',hide:[],style:'auto',season:'none',
   bundle:{name:'',price:0,pids:[]},sizes:{pid:'',rows:[]},inv:{cust:'',no:1,items:[],deliv:0,pay:'تحويل بنكك'},
   areas:[{a:'داخل الحي',f:0},{a:'داخل المدينة',f:0},{a:'خارج المدينة',f:0}],thanks:{name:'',disc:10,code:'شكرا10'}},S.tpl||{});
 if(!S.tpl.txt)S.tpl.txt={};
@@ -823,20 +823,38 @@ async function tMenu(){const P=pal(),it=tplItems(),W=1080,M=110,rowH=105,hasL=is
     T(x,pstr(p.price),M,cy,'800 40px '+BODY,P.accent,'left');const pw=tw(x,pstr(p.price),'800 40px '+BODY);
     x.fillStyle=P.line;for(let d=M+pw+24;d<W-M-nw-24;d+=18){x.beginPath();x.arc(d,cy+12,3,0,7);x.fill()}y+=rowH});
   T(x,tFoot(),W/2,H-foot+80,'600 32px '+BODY,P.muted,'center',W-2*M);wm(x,W,H-foot+135,P.muted);season(x,W,P,false);ribbon(x,W);return c}
-async function tCatalog(){const P=pal(),it=tplItems(),W=1080,M=50,G=34,top=300,cw=(W-2*M-G)/2,ph=cw,ch=ph+190,rows=Math.max(1,Math.ceil(it.length/2)),foot=isPro()?130:180,H=top+40+rows*(ch+G)+foot;
+async function drawPic(x,p,X,Y,w,h,r,P){x.save();rrect(x,X,Y,w,h,r);x.clip();
+  const im=p.pic?await loadImg(p.pic):null;
+  if(im){const a=w/h,ia=im.width/im.height;let sw=im.width,sh=im.height;if(ia>a)sw=im.height*a;else sh=im.width/a;x.drawImage(im,(im.width-sw)/2,(im.height-sh)/2,sw,sh,X,Y,w,h)}
+  else{x.fillStyle=grad(x,X+w,Y+h,P);x.fillRect(X,Y,w,h);x.globalAlpha=.3;T(x,(p.name||'؟').trim().charAt(0),X+w/2,Y+h/2,'400 '+Math.round(Math.min(w,h)*.5)+'px '+BRAND,'#fff','center');x.globalAlpha=1}
+  x.restore()}
+function cardBox(x,X,Y,w,h,r,P){x.save();x.shadowColor='rgba(0,0,0,.16)';x.shadowBlur=28;x.shadowOffsetY=9;x.fillStyle=P.foot;rrect(x,X,Y,w,h,r);x.fill();x.restore()}
+async function tCatalog(){const P=pal(),it=tplItems(),lay=S.tpl.catLayout||'magazine',W=1080,M=50,G=34,top=300,cw=(W-2*M-G)/2,foot=isPro()?130:180;
+  const heroH=700,rowH=270;let H,cells=[];
+  // geometry per layout
+  if(lay==='rows'){it.forEach((p,i)=>cells.push({p,X:M,Y:top+40+i*(rowH+G),w:W-2*M,h:rowH,k:'row'}));H=top+40+Math.max(1,it.length)*(rowH+G)+foot}
+  else{let y=top+40,start=0;
+    if(lay==='magazine'&&it.length){cells.push({p:it[0],X:M,Y:y,w:W-2*M,h:heroH,k:'hero'});y+=heroH+G;start=1}
+    const ch=cw+190;it.slice(start).forEach((p,i)=>{const col=i%2,row=Math.floor(i/2);cells.push({p,X:W-M-cw-col*(cw+G),Y:y+row*(ch+G),w:cw,h:ch,k:'grid'})});
+    const rows=Math.ceil((it.length-start)/2);H=y+Math.max(0,rows)*(ch+G)+(it.length?0:200)+foot}
   const [c,x]=canvas(W,H);head(x,W,top,P);paper(x,0,top,W,H-top-foot,P);
   let tx2=W-M;if(await drawLogo(x,W-M-150,55,150))tx2=W-M-180;
   T(x,tTitle(),tx2,110,'400 74px '+BRAND,P.head,'right',tx2-M-260);x.globalAlpha=.9;T(x,tSub(),tx2,195,'500 34px '+BODY,P.head,'right',tx2-M-260);x.globalAlpha=1;
-  for(let i=0;i<it.length;i++){const p=it[i],col=i%2,row=Math.floor(i/2),X=W-M-cw-col*(cw+G),Y=top+40+row*(ch+G);
-    x.save();x.shadowColor='rgba(0,0,0,.14)';x.shadowBlur=26;x.shadowOffsetY=8;x.fillStyle=P.foot;rrect(x,X,Y,cw,ch,32);x.fill();x.restore();
-    x.save();rrect(x,X,Y,cw,ph,32);x.clip();
-    const im=p.pic?await loadImg(p.pic):null;
-    if(im){const s0=Math.min(im.width,im.height);x.drawImage(im,(im.width-s0)/2,(im.height-s0)/2,s0,s0,X,Y,cw,ph)}
-    else{x.fillStyle=grad(x,X+cw,Y+ph,P);x.fillRect(X,Y,cw,ph);x.globalAlpha=.35;T(x,(p.name||'؟').trim().charAt(0),X+cw/2,Y+ph/2,'400 230px '+BRAND,'#fff','center');x.globalAlpha=1}
-    x.restore();
-    T(x,p.name,X+cw-26,Y+ph+52,'400 38px '+DISP,P.ink,'right',cw-52);
-    pill(x,pstr(p.price),X+cw-26,Y+ph+128,'800 34px '+BODY,P.hi,P.pillInk,'right');
-    if(p.old)strike(x,pstr(p.old),X+26,Y+ph+128,'500 24px '+BODY,P.muted,'left')}
+  for(const k of cells){const {p,X,Y,w,h}=k;
+    if(k.k==='hero'){cardBox(x,X,Y,w,h,40,P);await drawPic(x,p,X,Y,w,h,40,P);
+      const g=x.createLinearGradient(0,Y+h*.45,0,Y+h);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.78)');x.save();rrect(x,X,Y,w,h,40);x.clip();x.fillStyle=g;x.fillRect(X,Y,w,h);x.restore();
+      T(x,p.name,X+w-44,Y+h-130,'400 66px '+DISP,'#ffffff','right',w-88);
+      pill(x,pstr(p.price),X+w-44,Y+h-52,'800 40px '+BODY,P.hi,P.pillInk,'right');
+      if(p.old)strike(x,pstr(p.old),X+44,Y+h-52,'500 28px '+BODY,'rgba(255,255,255,.8)','left')}
+    else if(k.k==='row'){cardBox(x,X,Y,w,h,34,P);await drawPic(x,p,X+w-h+16,Y+16,h-32,h-32,24,P);
+      const tx3=X+w-h-10;T(x,p.name,tx3,Y+h/2-42,'400 52px '+DISP,P.ink,'right',w-h-60);
+      pill(x,pstr(p.price),tx3,Y+h/2+52,'800 38px '+BODY,P.hi,P.pillInk,'right');
+      if(p.old)strike(x,pstr(p.old),X+44,Y+h/2+52,'500 26px '+BODY,P.muted,'left')}
+    else{cardBox(x,X,Y,w,h,32,P);await drawPic(x,p,X,Y,w,w,32,P);
+      x.save();x.beginPath();x.rect(X,Y+w-30,w,30);x.clip();x.restore();
+      T(x,p.name,X+w-26,Y+w+52,'400 38px '+DISP,P.ink,'right',w-52);
+      pill(x,pstr(p.price),X+w-26,Y+w+128,'800 34px '+BODY,P.hi,P.pillInk,'right');
+      if(p.old)strike(x,pstr(p.old),X+26,Y+w+128,'500 24px '+BODY,P.muted,'left')}}
   if(!it.length)T(x,'أضف منتجاً من «منتجاتي»',W/2,top+200,'500 34px '+BODY,P.muted,'center');
   footer(x,W,H,foot,P);season(x,W,P,true);ribbon(x,W);return c}
 async function tStory(){const P=pal(),it=tplItems(),W=1080,H=1920,[c,x]=canvas(W,H);x.fillStyle=grad(x,W,H,P);x.fillRect(0,0,W,H);
@@ -956,6 +974,7 @@ function renderTplEditor(){
   const lk=isPro()?'':' 🔒';
   h+=`<div class="grid2"><div class="field"><label>نمط الألوان${lk}</label><select data-k="style" data-pro="1">${Object.entries(STYLES).map(([k,v])=>`<option value="${k}"${t.style===k?' selected':''}>${v}</option>`).join('')}</select></div>
      <div class="field"><label>مناسبة${lk}</label><select data-k="season" data-pro="1">${Object.entries(SEASONS).map(([k,v])=>`<option value="${k}"${t.season===k?' selected':''}>${v}</option>`).join('')}</select></div></div>`;
+  if(t.id==='catalog')h+=`<div class="field"><label>تنسيق الكتالوج</label><select data-k="catLayout"><option value="magazine"${(t.catLayout||'magazine')==='magazine'?' selected':''}>مجلة: منتج كبير ثم شبكة</option><option value="grid"${t.catLayout==='grid'?' selected':''}>شبكة: مربعات متساوية</option><option value="rows"${t.catLayout==='rows'?' selected':''}>صفوف: صورة بجانب الاسم</option></select></div>`;
   if(t.id==='offer')h+=F('نسبة الخصم %','discount',t.discount,{num:1});
   if(t.id==='featured'||t.id==='newin')h+=`<div class="field"><label>المنتج</label><select data-k="featured">${prodOpts(t.featured||(S.prods[0]||{}).id)}</select></div>`;
   if(d.list)h+=`<div class="field"><label>المنتجات الظاهرة</label><div class="chk">${S.prods.map(p=>`<label><input type="checkbox" data-hide="${p.id}"${t.hide.includes(p.id)?'':' checked'}>${esc(p.name)}</label>`).join('')}</div></div>`;
