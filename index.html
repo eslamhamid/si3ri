@@ -219,22 +219,100 @@ input[inputmode]{direction:ltr;text-align:center;font-variant-numeric:tabular-nu
 .pic-prev{width:52px;height:52px;border-radius:8px;object-fit:cover;background:var(--surface-2);border:1px solid var(--line);flex:none}
 .pic-empty{display:grid;place-items:center;font-size:11px;color:var(--muted)}
 a.btn{text-decoration:none}
+
+/* ===== v2: professional skin (light, flat, one accent) ===== */
+:root{--bg:#f3f6f4;--surface:#ffffff;--surface-2:#e8eeeb;--ink:#10211f;--muted:#586c68;--line:#dbe3df;--nile:#0f6b5f;--indigo:#2f5d8a;--saffron:#e0a21b;--karkade:#b5173b;--sun:#f6c453}
+body{font-size:15px;line-height:1.65;padding-bottom:calc(88px + env(safe-area-inset-bottom,0px))}
+body::before{display:none}
+.wrap{gap:14px;padding-block:12px 24px}
+h1,h2,h3{font-family:var(--body);font-weight:800}
+.sec-head h2{font:800 17px/1.4 var(--body)}
+.sec-head{margin-top:6px}
+/* app bar + rate card */
+.appbar{display:flex;align-items:center;justify-content:space-between;padding:4px 2px 0}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-mark{width:38px;height:38px;border-radius:11px;background:var(--ink);color:var(--sun);display:grid;place-items:center;flex:none}
+.logo b{display:block;font:400 25px/1.1 var(--display)}
+.logo small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+.ratecard{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 18px 14px;overflow:hidden}
+.ratecard::before{content:"";position:absolute;inset-block:0;inset-inline-start:0;width:5px;background:var(--saffron)}
+.ratecard label{display:block;font-size:13px;color:var(--muted);font-weight:600}
+.rate-row2{display:flex;align-items:baseline;gap:10px;margin-top:2px}
+.ratecard #rateNow{flex:1;min-width:0;width:auto;font:400 58px/1.1 var(--display);color:var(--ink);background:transparent;border:0;border-radius:0;padding:0;text-align:right;direction:ltr}
+.ratecard #rateNow:focus-visible{outline:none;box-shadow:0 2px 0 0 var(--saffron)}
+.ratecard .cur{font-weight:700;font-size:15px;color:var(--muted)}
+.ratecard .since{margin-top:6px;padding-top:10px;border-top:1px solid var(--line);color:var(--muted);font-size:13px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.chip.flat{background:var(--surface-2);color:var(--muted)}
+.chip{border-radius:6px}
+/* alerts */
+.alert{border-width:1px;border-inline-start-width:5px;border-radius:12px;background:var(--surface)}
+.alert.bad{border-color:var(--karkade);background:color-mix(in srgb,var(--karkade) 7%,var(--surface))}
+.alert.ok{border-color:var(--nile);background:color-mix(in srgb,var(--nile) 7%,var(--surface))}
+.alert b{font:800 16px var(--body)}
+/* bottom navigation */
+.tabs{position:fixed;inset:auto 0 0 0;top:auto;margin:0 auto;max-width:560px;z-index:15;grid-template-columns:repeat(5,1fr);gap:0;border:0;border-top:1px solid var(--line);border-radius:18px 18px 0 0;background:var(--surface);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));box-shadow:0 -8px 24px -16px rgba(16,33,31,.5)}
+.tab{display:grid;justify-items:center;gap:1px;font:600 11.5px var(--body);color:var(--muted);padding:2px 0 0;border-radius:12px;background:transparent}
+.tab .ti{width:52px;height:30px;border-radius:15px;display:grid;place-items:center;transition:background .15s}
+.tab svg{width:22px;height:22px}
+.tab[aria-selected="true"]{background:transparent;color:var(--nile)}
+.tab[aria-selected="true"] .ti{background:color-mix(in srgb,var(--nile) 15%,transparent)}
+.tab[aria-selected="true"] svg{stroke-width:2.2}
+.toast{inset:auto 0 calc(92px + env(safe-area-inset-bottom,0px)) 0}
+/* buttons */
+.btn{border-radius:11px;padding:12px 16px;min-height:44px}
+.btn.primary{background:var(--nile);color:#fff}
+.btn.nile{background:var(--surface-2);color:var(--ink)}
+.btn.line{background:var(--surface);color:var(--ink);border:1.5px solid var(--line)}
+.btn.wide{flex:1 1 100%}
+.btn-row .btn.line{flex:1 1 120px}
+/* surfaces */
+.panel,.list,.breakdown,.stat,.ord,.install,.welcome,.whatsnew,.lockbox{border-radius:14px}
+.welcome{border-inline-start-color:var(--nile)}
+.whatsnew{border-inline-start-color:var(--saffron)}
+.lk{display:inline-block;vertical-align:-1px}
+button .lk,label .lk,small .lk{margin-inline-end:2px}
+/* template picker */
+.tpl{border-width:1.5px;border-radius:12px;min-width:84px;padding:10px 8px;gap:6px}
+.tpl i{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;background:var(--surface-2);color:var(--nile)}
+.tpl i svg{width:23px;height:23px}
+.tpl[aria-pressed="true"]{border-color:var(--nile);background:color-mix(in srgb,var(--nile) 7%,var(--surface))}
+.tpl[aria-pressed="true"] i{background:var(--nile);color:#fff}
+.tpl small{display:flex;align-items:center;gap:3px;color:var(--muted)}
+/* guard report */
+.guard{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.guard-top{padding:14px 16px;display:grid;gap:4px;border-inline-start:5px solid var(--karkade)}
+.guard-top b{font:800 16px var(--body)}
+.guard-top .big{font:400 30px/1.1 var(--display);color:var(--karkade)}
+.guard-top p{margin:0;color:var(--muted);font-size:13.5px}
+.guard-rows{border-top:1px solid var(--line)}
+.guard-row{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:10px 16px;border-bottom:1px solid var(--line);align-items:center}
+.guard-row:last-child{border-bottom:0}
+.guard-row .nm{font-weight:700}
+.guard-row .gp{font-weight:800;font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate;text-align:left}
+.guard-row .gp.bad{color:var(--karkade)}.guard-row .gp.ok{color:var(--nile)}
+.guard-row .sub{grid-column:1/-1;font-size:12.5px;color:var(--muted)}
+.guard-lock{padding:12px 16px;border-top:1px dashed var(--line);display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--surface-2)}
+.guard-lock span{flex:1 1 180px;font-size:13px;color:var(--muted)}
+
+/* compact header on inner tabs */
+body[data-tab]:not([data-tab="list"]) #alert,body[data-tab]:not([data-tab="list"]) .ratecard label,body[data-tab]:not([data-tab="list"]) .ratecard .since{display:none}
+body[data-tab]:not([data-tab="list"]) .ratecard{padding:8px 16px}
+body[data-tab]:not([data-tab="list"]) .ratecard #rateNow{font-size:30px}
+body[data-tab]:not([data-tab="list"]) .rate-row2{align-items:center;margin:0}
 </style>
 </head>
 <body>
 
 
 <div class="wrap">
-  <header class="hero">
-    <div class="tag">
-    <div class="brand"><h1>سعري اليوم</h1><small>الدولار تغيّر؟ حدّث أسعارك</small></div>
-    <div class="rate">
-      <label for="rateNow">سعر الدولار اليوم (السوق الموازي)</label>
-      <div class="rate-row"><input id="rateNow" inputmode="decimal" aria-label="سعر الدولار اليوم"><span class="cur" id="curLbl">جنيه</span></div>
-      <div class="since" id="since"></div>
-    </div>
-    </div>
+  <header class="appbar">
+    <div class="logo"><span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L3 13V4h9l8.6 8.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="8.5" r="1.3"/></svg></span><div><b>سعري اليوم</b><small>الدولار تغيّر؟ حدّث أسعارك</small></div></div>
   </header>
+  <div class="ratecard">
+    <label for="rateNow">سعر الدولار اليوم (السوق الموازي)</label>
+    <div class="rate-row2"><input id="rateNow" inputmode="decimal" aria-label="سعر الدولار اليوم"><span class="cur" id="curLbl">جنيه</span></div>
+    <div class="since" id="since"></div>
+  </div>
 
   <div id="alert"></div>
   <div class="whatsnew" id="whatsNew" hidden>
@@ -249,33 +327,34 @@ a.btn{text-decoration:none}
     <ol class="steps">
       <li><span>من «خاماتي» اكتب خاماتك وسعر شرائها، وسعر الدولار يوم الشراء.</span></li>
       <li><span>من «منتجاتي» حدد خامات كل منتج، وأجر عملك، ونسبة ربحك.</span></li>
-      <li><span>كل يوم اكتب سعر الدولار في الخانة الصفراء، وأرسل قائمتك الجديدة لزبائنك.</span></li>
+      <li><span>كل يوم اكتب سعر الدولار في الخانة الكبيرة أعلى الصفحة، وأرسل قائمتك الجديدة لزبائنك.</span></li>
     </ol>
     <div class="btn-row"><button class="btn primary" id="startOwn">البدء ببياناتي</button><button class="btn ghost" id="tryEx">تجربة المثال أولاً</button></div>
   </div>
 
   <nav class="tabs" role="tablist">
-    <button class="tab" role="tab" data-t="list" aria-selected="true">قائمتي</button>
-    <button class="tab" role="tab" data-t="sales" aria-selected="false">الطلبات</button>
-    <button class="tab" role="tab" data-t="prods" aria-selected="false">منتجاتي</button>
-    <button class="tab" role="tab" data-t="mats" aria-selected="false">خاماتي</button>
-    <button class="tab" role="tab" data-t="set" aria-selected="false">الإعدادات</button>
+    <button class="tab" role="tab" data-t="list" aria-selected="true"><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span><span>قائمتي</span></button>
+    <button class="tab" role="tab" data-t="sales" aria-selected="false"><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4h6v3H9z"/><path d="M7 5H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1"/><path d="M8.5 13l2.2 2.2L15.5 10.5"/></svg></span><span>الطلبات</span></button>
+    <button class="tab" role="tab" data-t="prods" aria-selected="false"><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg></span><span>منتجاتي</span></button>
+    <button class="tab" role="tab" data-t="mats" aria-selected="false"><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 12.5l9 5 9-5M3 16.5l9 5 9-5"/></svg></span><span>خاماتي</span></button>
+    <button class="tab" role="tab" data-t="set" aria-selected="false"><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/></svg></span><span>الإعدادات</span></button>
   </nav>
 
   <section id="t-list">
+    <div id="guard"></div>
     <p class="example" id="exNote">هذه بيانات مثال للتجربة فقط. عدّلها من «خاماتي» و«منتجاتي» لتصبح أسعارك أنت.</p>
     <div class="sec-head"><h2>قوالب التصميم</h2></div>
     <div class="tpl-pick" id="tplPick" role="group" aria-label="القوالب"></div>
     <img class="tpl-prev" id="tplPreview" alt="معاينة قائمة الأسعار">
     <details class="panel tpl-edit" id="tplEdit">
-      <summary>✏️ تعديل التصميم</summary>
+      <summary>تعديل التصميم</summary>
       <div id="tplFields" style="display:grid;gap:10px"></div>
     </details>
     <div id="card" hidden></div>
     <div class="btn-row">
-      <button class="btn primary" id="imgBtn">مشاركة كصورة</button>
-      <button class="btn nile" id="copyBtn">نسخ القائمة كنص</button>
-      <button class="btn saffron" id="saveBtn">اعتماد هذه الأسعار</button>
+      <button class="btn primary wide" id="saveBtn">اعتماد هذه الأسعار</button>
+      <button class="btn line" id="imgBtn">مشاركة كصورة</button>
+      <button class="btn line" id="copyBtn">نسخ القائمة كنص</button>
     </div>
     
     <div class="sec-head"><h2>من وين جاء السعر؟</h2></div>
@@ -355,7 +434,7 @@ a.btn{text-decoration:none}
       <div class="field"><label>لون قائمة الأسعار <span class="pro-badge">مميزة</span></label>
         <div class="swatches" id="swatches"></div>
         <div class="custom-color">
-          <label for="customColor" class="btn ghost small">🎨 لون شعارك الخاص</label>
+          <label for="customColor" class="btn ghost small">لون شعارك الخاص</label>
           <input type="color" id="customColor" value="#0c2a2b">
           <span class="hint">أي لون يطابق شعارك</span>
         </div></div>
@@ -409,6 +488,7 @@ let S;
 try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}
 if(!S||!S.mats)S=sample();
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const LOCK='<svg class="lk" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
 const $=id=>document.getElementById(id);
 const n=v=>{const x=parseFloat(String(v).replace(/,/g,''));return isFinite(x)?x:0};
 const fmt=v=>Math.round(v).toLocaleString('en-US');
@@ -481,7 +561,7 @@ function renderProds(){
     return `<div class="panel prod" data-id="${p.id}">
       <div class="mat-head"><input data-f="name" value="${esc(p.name)}" aria-label="اسم المنتج"><button class="btn icon" data-act="delProd" aria-label="حذف">×</button></div>
       <div class="pic-row">${p.pic?`<img class="pic-prev" src="${p.pic}" alt="">`:'<span class="pic-prev pic-empty">صورة</span>'}
-        <label class="btn ghost small" for="pic-${p.id}" data-piclbl>${p.pic?'تغيير الصورة':'إضافة صورة للكتالوج'}${isPro()?'':' 🔒'}</label>
+        <label class="btn ghost small" for="pic-${p.id}" data-piclbl>${p.pic?'تغيير الصورة':'إضافة صورة للكتالوج'}${isPro()?'':' '+LOCK}</label>
         <input type="file" id="pic-${p.id}" accept="image/*" hidden data-pic>${p.pic?'<button class="btn ghost small" data-act="delPic">حذف الصورة</button>':''}</div>
       <div class="grid3">
         <div class="field"><label>كم قطعة/علبة تطلع</label><input data-f="yield" inputmode="decimal" value="${p.yield}"></div>
@@ -572,7 +652,7 @@ const isPro=()=>!!S.pro;
 function renderWelcome(){$('welcome').hidden=!!S.seenWelcome}
 $('startOwn').onclick=()=>{S.mats=[];S.prods=[];S.example=false;S.lastRate=0;S.biz='';S.seenWelcome=true;save();renderAll();goTab('mats');toast('ابدأ بإضافة أول خامة')};
 $('tryEx').onclick=()=>{S.seenWelcome=true;save();renderWelcome()};
-function goTab(t){document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected',x.dataset.t===t));['list','sales','prods','mats','set'].forEach(k=>$('t-'+k).hidden=k!==t);renderAll();window.scrollTo({top:0,behavior:'smooth'})}
+function goTab(t){window.scrollTo(0,0);document.body.dataset.tab=t;document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected',x.dataset.t===t));['list','sales','prods','mats','set'].forEach(k=>$('t-'+k).hidden=k!==t);renderAll();window.scrollTo({top:0,behavior:'smooth'})}
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>goTab(b.dataset.t));
 document.addEventListener('click',e=>{const g=e.target.closest('[data-goto]');if(g)goTab(g.dataset.goto)});
 
@@ -580,7 +660,7 @@ document.addEventListener('click',e=>{const g=e.target.closest('[data-goto]');if
 const _renderSet=renderSet;
 renderSet=function(){
   _renderSet();
-  document.querySelectorAll('[data-theme-pick]').forEach(b=>{if(!isPro()&&b.dataset.themePick!=='indigo'){b.textContent='🔒';b.style.fontSize='16px'}});
+  document.querySelectorAll('[data-theme-pick]').forEach(b=>{if(!isPro()&&b.dataset.themePick!=='indigo'){b.innerHTML=LOCK;b.style.display='grid';b.style.placeItems='center'}});
   $('logoPrev').hidden=!S.logo;if(S.logo)$('logoPrev').src=S.logo;
   $('logoDel').hidden=!S.logo;
   renderPro();
@@ -598,14 +678,14 @@ $('logoDel').onclick=()=>{S.logo='';save();renderSet();renderList()};
 
 // --- upgrade box ---
 function renderPro(){
-  if(isPro()){$('proBox').innerHTML='<div class="pro-on">✅ النسخة المميزة مفعّلة: الألوان، الشعار، سجل المبيعات، والصورة بدون علامة الأداة.</div>';return}
+  if(isPro()){$('proBox').innerHTML='<div class="pro-on">النسخة المميزة مفعّلة: الألوان، الشعار، سجل المبيعات، والصورة بدون علامة الأداة.</div>';return}
   const how=CONFIG.whatsapp?`حوّل ${CONFIG.price?esc(CONFIG.price)+' ':''}عبر بنكك، وأرسل الإيصال على واتساب: <span class="num">${esc(CONFIG.whatsapp)}</span>، ويصلك كود التفعيل.`:'تواصل معنا للحصول على كود التفعيل.';
   $('proBox').innerHTML=`<div class="upgrade"><h3>النسخة المميزة <span class="pro-badge">مميزة</span></h3>
     <ul><li>قائمة أسعار بشعار مشروعك وألوانك</li><li>صورة القائمة بدون علامة الأداة</li><li>سجل المبيعات وصافي ربحك كل شهر</li></ul>
     <p class="hint">${how}</p>
     <div class="field"><label for="codeIn" style="color:#fff">كود التفعيل</label><input id="codeIn" placeholder="SR-0000-0000" autocomplete="off"></div>
     <button class="btn saffron" id="codeBtn">تفعيل</button></div>`;
-  $('codeBtn').onclick=()=>{const v=$('codeIn').value;if(validCode(v)){S.pro=true;S.proCode=v.trim().toUpperCase();save();renderAll();toast('🎉 تم تفعيل النسخة المميزة')}else toast('الكود غير صحيح، تأكد من كتابته')};
+  $('codeBtn').onclick=()=>{const v=$('codeIn').value;if(validCode(v)){S.pro=true;S.proCode=v.trim().toUpperCase();save();renderAll();toast('تم تفعيل النسخة المميزة')}else toast('الكود غير صحيح، تأكد من كتابته')};
 }
 
 // --- price card with logo + watermark ---
@@ -708,7 +788,7 @@ const _rs2=renderSet;
 renderSet=function(){
   _rs2();
   const b=document.createElement('button');b.className='sw custom';b.dataset.themePick='custom';b.setAttribute('aria-pressed',S.theme==='custom');b.setAttribute('aria-label','لونك الخاص');
-  if(!isPro()){b.textContent='🔒';b.style.fontSize='16px'}else if(S.customColor)b.style.background=S.customColor;
+  if(!isPro()){b.innerHTML=LOCK;b.style.display='grid';b.style.placeItems='center'}else if(S.customColor)b.style.background=S.customColor;
   $('swatches').appendChild(b);
   $('customColor').value=S.customColor||'#0c2a2b';
 };
@@ -728,11 +808,11 @@ let deferredPrompt=null;
 const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
 const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
 function showInstall(){if(standalone||S.hideInstall)return;$('installBox').hidden=false;
-  if(isIOS){$('installTxt').textContent='زر المشاركة ⬆️ في سفاري ← «إضافة إلى الشاشة الرئيسية».';$('installBtn').hidden=true}}
+  if(isIOS){$('installTxt').textContent='زر المشاركة في سفاري ← «إضافة إلى الشاشة الرئيسية».';$('installBtn').hidden=true}}
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;showInstall()});
 if(isIOS)showInstall();
 $('installBtn').onclick=async()=>{if(!deferredPrompt){toast('من قائمة Chrome ⋮ اختر «إضافة إلى الشاشة الرئيسية»');return}
-  deferredPrompt.prompt();const r=await deferredPrompt.userChoice;deferredPrompt=null;if(r.outcome==='accepted'){$('installBox').hidden=true;toast('تم التثبيت 🎉')}};
+  deferredPrompt.prompt();const r=await deferredPrompt.userChoice;deferredPrompt=null;if(r.outcome==='accepted'){$('installBox').hidden=true;toast('تم التثبيت')}};
 $('installX').onclick=()=>{S.hideInstall=true;save();$('installBox').hidden=true};
 window.addEventListener('appinstalled',()=>{$('installBox').hidden=true});
 
@@ -744,19 +824,21 @@ if(!S.tpl.txt)S.tpl.txt={};
 // migrate old shared texts
 if(S.tpl.title||S.tpl.sub||S.tpl.foot){S.tpl.txt[S.tpl.id]={title:S.tpl.title||'',sub:S.tpl.sub||'',foot:S.tpl.foot||''};delete S.tpl.title;delete S.tpl.sub;delete S.tpl.foot}
 const ALL=['title','sub','foot'];
+const TIC={"classic": "<path d=\"M7 3h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z\"/><path d=\"M9 8h6M9 12h6M9 16h4\"/>", "menu": "<path d=\"M12 3l2.2 5.3 5.8.5-4.4 3.8 1.4 5.6L12 15l-5 3.2 1.4-5.6L4 8.8l5.8-.5z\"/>", "catalog": "<rect x=\"3\" y=\"4\" width=\"18\" height=\"16\" rx=\"2\"/><circle cx=\"9\" cy=\"10\" r=\"1.8\"/><path d=\"M21 16l-5-5-8 9\"/>", "story": "<rect x=\"7\" y=\"2.5\" width=\"10\" height=\"19\" rx=\"2.5\"/><path d=\"M11 18.5h2\"/>", "offer": "<path d=\"M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L3 13V4h9l8.6 8.6a2 2 0 0 1 0 2.8z\"/><circle cx=\"7.5\" cy=\"8.5\" r=\"1.3\"/>", "bundle": "<rect x=\"3\" y=\"9\" width=\"18\" height=\"12\" rx=\"1.5\"/><path d=\"M12 9v12M3 13h18\"/><path d=\"M12 9c-1-4-5-4-5-1.5S10 9 12 9zM12 9c1-4 5-4 5-1.5S14 9 12 9z\"/>", "sizes": "<path d=\"M3 16l13-13 5 5L8 21z\"/><path d=\"M7 12l2 2M10 9l2 2M13 6l2 2\"/>", "featured": "<circle cx=\"12\" cy=\"9\" r=\"5\"/><path d=\"M8.5 13.5L7 21l5-3 5 3-1.5-7.5\"/>", "newin": "<path d=\"M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M18 6l-2.5 2.5M8.5 15.5L6 18\"/>", "invoice": "<path d=\"M6 3h12v18l-3-2-3 2-3-2-3 2z\"/><path d=\"M9 8h6M9 12h6\"/>", "delivery": "<path d=\"M2 6h11v10H2zM13 9h4l3 3v4h-7z\"/><circle cx=\"6.5\" cy=\"18\" r=\"1.8\"/><circle cx=\"16.5\" cy=\"18\" r=\"1.8\"/>", "thanks": "<path d=\"M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.6-7 10-7 10z\"/>"};
+const tIcon=id=>'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(TIC[id]||TIC.classic)+'</svg>';
 const TPLS=[
- {id:'classic',name:'كلاسيكي',ic:'📋',pro:false,uses:ALL,list:1,sub:()=>'قائمة الأسعار · '+today(),foot:'الأسعار سارية لليوم وقابلة للتغيير'},
- {id:'menu',name:'قائمة أنيقة',ic:'✨',pro:true,uses:ALL,list:1,sub:()=>'قائمة الأسعار',foot:'للطلب تواصلوا معنا على واتساب'},
- {id:'catalog',name:'كتالوج بالصور',ic:'🖼️',pro:true,uses:ALL,list:1,sub:()=>'كتالوج المنتجات · '+today(),foot:'للطلب تواصلوا معنا على واتساب'},
- {id:'story',name:'ستوري',ic:'📱',pro:true,uses:ALL,list:1,sub:()=>'أسعار اليوم · '+today(),foot:'اطلبوا الآن على الخاص'},
- {id:'offer',name:'عرض خاص',ic:'🔥',pro:true,uses:ALL,list:1,sub:()=>'لفترة محدودة',foot:'العرض ساري حتى نفاد الكمية'},
- {id:'bundle',name:'بكج',ic:'🎁',pro:true,uses:ALL,sub:()=>'اشترِ أكثر ووفّر',foot:'الكمية محدودة'},
- {id:'sizes',name:'الأحجام',ic:'📏',pro:true,uses:ALL,sub:()=>'اختر الحجم المناسب لك',foot:'للطلب تواصلوا معنا على واتساب'},
- {id:'featured',name:'منتج مميز',ic:'⭐',pro:true,uses:ALL,sub:()=>'متوفر الآن',foot:'اطلبوه الآن قبل ما يخلص'},
- {id:'newin',name:'وصل حديثاً',ic:'🆕',pro:true,uses:ALL,sub:()=>'جديد عندنا',foot:'كن أول من يجربه'},
- {id:'invoice',name:'فاتورة',ic:'🧾',pro:true,uses:['title','foot'],sub:()=>'',foot:'شكراً لتعاملكم معنا'},
- {id:'delivery',name:'التوصيل',ic:'🚚',pro:true,uses:ALL,sub:()=>'أسعار التوصيل',foot:'التوصيل خلال 24 ساعة من الطلب'},
- {id:'thanks',name:'شكراً لطلبك',ic:'💜',pro:true,uses:['title','foot'],sub:()=>'',foot:'نسعد بخدمتك دائماً'}
+ {id:'classic',name:'كلاسيكي',pro:false,uses:ALL,list:1,sub:()=>'قائمة الأسعار · '+today(),foot:'الأسعار سارية لليوم وقابلة للتغيير'},
+ {id:'menu',name:'قائمة أنيقة',pro:true,uses:ALL,list:1,sub:()=>'قائمة الأسعار',foot:'للطلب تواصلوا معنا على واتساب'},
+ {id:'catalog',name:'كتالوج بالصور',pro:true,uses:ALL,list:1,sub:()=>'كتالوج المنتجات · '+today(),foot:'للطلب تواصلوا معنا على واتساب'},
+ {id:'story',name:'ستوري',pro:true,uses:ALL,list:1,sub:()=>'أسعار اليوم · '+today(),foot:'اطلبوا الآن على الخاص'},
+ {id:'offer',name:'عرض خاص',pro:true,uses:ALL,list:1,sub:()=>'لفترة محدودة',foot:'العرض ساري حتى نفاد الكمية'},
+ {id:'bundle',name:'بكج',pro:true,uses:ALL,sub:()=>'اشترِ أكثر ووفّر',foot:'الكمية محدودة'},
+ {id:'sizes',name:'الأحجام',pro:true,uses:ALL,sub:()=>'اختر الحجم المناسب لك',foot:'للطلب تواصلوا معنا على واتساب'},
+ {id:'featured',name:'منتج مميز',pro:true,uses:ALL,sub:()=>'متوفر الآن',foot:'اطلبوه الآن قبل ما يخلص'},
+ {id:'newin',name:'وصل حديثاً',pro:true,uses:ALL,sub:()=>'جديد عندنا',foot:'كن أول من يجربه'},
+ {id:'invoice',name:'فاتورة',pro:true,uses:['title','foot'],sub:()=>'',foot:'شكراً لتعاملكم معنا'},
+ {id:'delivery',name:'التوصيل',pro:true,uses:ALL,sub:()=>'أسعار التوصيل',foot:'التوصيل خلال 24 ساعة من الطلب'},
+ {id:'thanks',name:'شكراً لطلبك',pro:true,uses:['title','foot'],sub:()=>'',foot:'نسعد بخدمتك دائماً'}
 ];
 const STYLES={auto:'ألوان مشروعي',gold:'فخم ذهبي',pastel:'باستيل ناعم',sudani:'نقوش سودانية'};
 const SEASONS={none:'بدون',ramadan:'رمضان كريم',eid:'عيد مبارك',wedding:'ألف مبروك'};
@@ -971,7 +1053,7 @@ function renderTplEditor(){
   if(d.uses.includes('title'))h+=F('العنوان الكبير','txt.'+t.id+'.title',X.title,{ph:S.biz||'اسم مشروعك'});
   if(d.uses.includes('sub'))h+=F('السطر تحت العنوان','txt.'+t.id+'.sub',X.sub,{ph:d.sub()});
   if(d.uses.includes('foot'))h+=F('النص في الأسفل (رقمك، عنوانك…)','txt.'+t.id+'.foot',X.foot,{ph:d.foot});
-  const lk=isPro()?'':' 🔒';
+  const lk=isPro()?'':' '+LOCK;
   h+=`<div class="grid2"><div class="field"><label>نمط الألوان${lk}</label><select data-k="style" data-pro="1">${Object.entries(STYLES).map(([k,v])=>`<option value="${k}"${t.style===k?' selected':''}>${v}</option>`).join('')}</select></div>
      <div class="field"><label>مناسبة${lk}</label><select data-k="season" data-pro="1">${Object.entries(SEASONS).map(([k,v])=>`<option value="${k}"${t.season===k?' selected':''}>${v}</option>`).join('')}</select></div></div>`;
   if(t.id==='catalog')h+=`<div class="field"><label>تنسيق الكتالوج</label><select data-k="catLayout"><option value="magazine"${(t.catLayout||'magazine')==='magazine'?' selected':''}>مجلة: منتج كبير ثم شبكة</option><option value="grid"${t.catLayout==='grid'?' selected':''}>شبكة: مربعات متساوية</option><option value="rows"${t.catLayout==='rows'?' selected':''}>صفوف: صورة بجانب الاسم</option></select></div>`;
@@ -993,9 +1075,9 @@ function renderTplEditor(){
   $('tplFields').innerHTML=h;
 }
 function renderTpl(){
-  $('tplPick').innerHTML=TPLS.map(t=>`<button class="tpl" data-tpl="${t.id}" aria-pressed="${S.tpl.id===t.id}"><i>${t.ic}</i>${t.name}${t.pro&&!isPro()?'<small>🔒 مميزة</small>':''}</button>`).join('');
+  $('tplPick').innerHTML=TPLS.map(t=>`<button class="tpl" data-tpl="${t.id}" aria-pressed="${S.tpl.id===t.id}"><i>${tIcon(t.id)}</i>${t.name}${t.pro&&!isPro()?'<small>'+LOCK+' مميزة</small>':''}</button>`).join('');
   if(!$('tplFields').contains(document.activeElement))renderTplEditor();
-  $('imgBtn').textContent=tplDef().pro&&!isPro()?'🔒 مشاركة (النسخة المميزة)':'مشاركة كصورة';
+  $('imgBtn').textContent=tplDef().pro&&!isPro()?'مشاركة (النسخة المميزة)':'مشاركة كصورة';
 }
 $('tplPick').addEventListener('click',e=>{const b=e.target.closest('[data-tpl]');if(!b)return;S.tpl.id=b.dataset.tpl;save();renderTpl();renderTplEditor();schedulePreview();
   if(tplDef().pro&&!isPro())toast('معاينة فقط: هذا القالب في النسخة المميزة')});
@@ -1022,8 +1104,10 @@ const _rl3=renderList;renderList=function(){_rl3();$('card').hidden=true;if($('t
 
 
 // ---- what's new (عدّل هذه القائمة مع كل تحديث) ----
-const APP_VERSION='1.8';
+const APP_VERSION='2.0';
 const WHATS_NEW=[
+ 'تصميم جديد: شريط تنقل سفلي وأيقونات وبطاقة سعر أوضح',
+ 'تقرير الحماية: كم ينقصك لو بعت بالأسعار القديمة (للنسخة المميزة)',
  'كتالوج بالصور: أضف صورة لكل منتج وأرسل كتالوجاً بمربعات للزبائن (النسخة المميزة)',
  'تصميم جديد بالكامل: بطاقة سعر، خطوط أوضح، وألوان النيل والذهب',
  'الطلبات: مواعيد التسليم، من دفع ومن لم يدفع، ورسالة واتساب للزبون بضغطة',
@@ -1053,7 +1137,7 @@ validCode=c=>String(c).trim().toUpperCase().replace(/\s/g,'')===codeFor(S.dev);
 const waNum=()=>String(CONFIG.whatsapp||'').replace(/\D/g,'');
 const waLink=(num,msg)=>'https://wa.me/'+String(num).replace(/\D/g,'')+'?text='+encodeURIComponent(msg);
 renderPro=function(){
-  if(isPro()){$('proBox').innerHTML='<div class="pro-on">✅ النسخة المميزة مفعّلة على هذا الجهاز: القوالب، الألوان والشعار، الطلبات والزبائن، المخزون، والأرباح.</div>';return}
+  if(isPro()){$('proBox').innerHTML='<div class="pro-on">النسخة المميزة مفعّلة على هذا الجهاز: القوالب، الألوان والشعار، الطلبات والزبائن، المخزون، والأرباح.</div>';return}
   const msg='السلام عليكم، أريد تفعيل النسخة المميزة من «سعري اليوم». رقم جهازي: '+devLbl();
   const steps=`<ol class="steps" style="color:#fff"><li><span>حوّل ${CONFIG.price?'<b>'+esc(CONFIG.price)+'</b> ':''}عبر بنكك${CONFIG.bankak?' إلى الحساب: <span class="num">'+esc(CONFIG.bankak)+'</span>':''}.</span></li><li><span>أرسل الإيصال ورقم جهازك على واتساب${waNum()?': <span class="num">'+esc(CONFIG.whatsapp)+'</span>':''}.</span></li><li><span>يصلك كود التفعيل، اكتبه هنا.</span></li></ol>`;
   $('proBox').innerHTML=`<div class="upgrade"><h3>النسخة المميزة <span class="pro-badge">مميزة</span></h3>
@@ -1065,7 +1149,7 @@ renderPro=function(){
     <button class="btn saffron" id="codeBtn">تفعيل</button>
     <p class="hint">الكود يعمل على هذا الجهاز فقط. لو غيّرت التلفون أو مسحت بيانات المتصفح، تواصل معنا لكود جديد.</p></div>`;
   $('devCopy').onclick=()=>{try{navigator.clipboard.writeText(devLbl()).then(()=>toast('تم نسخ رقم الجهاز'),()=>fallback(devLbl()))}catch(e){fallback(devLbl())}};
-  $('codeBtn').onclick=()=>{const v=$('codeIn').value;if(validCode(v)){S.pro=true;S.proCode=v.trim().toUpperCase();save();renderAll();toast('🎉 تم تفعيل النسخة المميزة')}else toast('الكود غير صحيح لهذا الجهاز، تأكد من كتابته')};
+  $('codeBtn').onclick=()=>{const v=$('codeIn').value;if(validCode(v)){S.pro=true;S.proCode=v.trim().toUpperCase();save();renderAll();toast('تم تفعيل النسخة المميزة')}else toast('الكود غير صحيح لهذا الجهاز، تأكد من كتابته')};
 };
 
 // ================= inventory =================
@@ -1074,18 +1158,44 @@ const hasStock=m=>m.stock!==''&&m.stock!==null&&m.stock!==undefined;
 const lowMats=()=>S.mats.filter(m=>hasStock(m)&&n(m.min)>0&&n(m.stock)<=n(m.min));
 function canMake(p){let best=Infinity;const y=Math.max(n(p.yield),1);for(const it of p.items){const m=S.mats.find(x=>x.id===it.m);if(!m||!hasStock(m)||n(it.q)<=0)return null;best=Math.min(best,Math.floor(n(m.stock)/(n(it.q)/y)))}return best===Infinity?null:Math.max(best,0)}
 function useStock(p,q,sign){const y=Math.max(n(p.yield),1);p.items.forEach(it=>{const m=S.mats.find(x=>x.id===it.m);if(m&&hasStock(m))m.stock=Math.round((n(m.stock)-sign*n(it.q)/y*q)*1000)/1000})}
+
+// ---- تقرير الحماية: كم ينقصك لو بعت بالأسعار القديمة ----
+function guardData(){
+  if(!S.lastRate)return null;
+  const rows=S.prods.map(p=>{
+    const c=prodCalc(p,S.rate),o=prodCalc(p,S.lastRate),oldP=o.price,newP=c.price;
+    const oldProfit=oldP-c.cost,newProfit=newP-c.cost;
+    const sold=S.sales.filter(x=>x.pid===p.id&&(Date.now()-new Date(x.date))/864e5<=30).reduce((a,x)=>a+n(x.qty),0);
+    return {p,oldP,newP,oldProfit,newProfit,gap:newP-oldP,sold,below:oldP<c.cost};
+  }).filter(r=>r.gap>0).sort((a,b)=>b.gap-a.gap);
+  if(!rows.length)return null;
+  return {rows,worst:rows[0],below:rows.filter(r=>r.below).length,month:rows.reduce((a,r)=>a+r.gap*r.sold,0),sold:rows.reduce((a,r)=>a+r.sold,0)};
+}
+function renderGuard(){
+  const box=$('guard');if(!box)return;const G=guardData();
+  if(!G){box.innerHTML='';return}
+  const w=G.worst,pro=isPro();
+  const head=`<div class="guard-top"><b>تقرير الحماية</b><span class="big"><span class="num">${fmt(w.gap)}</span> ${esc(S.cur)}</span>
+    <p>هذا ما ينقص ربحك في القطعة الواحدة من «${esc(w.p.name)}» لو بعتها بالسعر القديم.${G.below?` وفي <b>${G.below}</b> ${G.below>1?'منتجات':'منتج'} صار السعر القديم تحت التكلفة.`:''}</p></div>`;
+  if(!pro){box.innerHTML=`<div class="guard">${head}<div class="guard-lock"><span>التقرير الكامل يعرض كل منتج: ربحك بالسعر القديم والجديد، وتقدير النقص في آخر 30 يوماً.</span><button class="btn primary small" data-goto="set">${LOCK} فتح التقرير</button></div></div>`;return}
+  const rowsH=G.rows.map(r=>`<div class="guard-row"><span class="nm">${esc(r.p.name)}</span><span class="gp ${r.below?'bad':'ok'}">+${fmt(r.gap)}</span>
+    <span class="sub">ربحك للقطعة: <span class="num">${fmt(r.oldProfit)}</span> بالسعر القديم، و<span class="num">${fmt(r.newProfit)}</span> بالجديد${r.below?' · <b style="color:var(--karkade)">القديم تحت التكلفة</b>':''}${r.sold?` · بعت <span class="num">${fmt(r.sold)}</span> في آخر 30 يوماً`:''}</span></div>`).join('');
+  const foot=G.sold?`<div class="guard-lock"><span>تقدير: لو بيعت كل قطع آخر 30 يوماً (<span class="num">${fmt(G.sold)}</span>) بالأسعار القديمة، ينقصك حوالي <b class="num">${fmt(G.month)} ${esc(S.cur)}</b>.</span></div>`:'';
+  box.innerHTML=`<div class="guard">${head}<div class="guard-rows">${rowsH}</div>${foot}</div>`;
+}
+const _rl=renderList;renderList=function(){_rl();renderGuard()};
 const _rm=renderMats;
 renderMats=function(){_rm();
   document.querySelectorAll('#mats .mat').forEach(el=>{const m=S.mats.find(x=>x.id===el.dataset.id);if(!m)return;
     const box=document.createElement('div');
     if(isPro()){const low=hasStock(m)&&n(m.min)>0&&n(m.stock)<=n(m.min);
-      box.innerHTML=`<div class="grid2"><div class="field"><label>المخزون الحالي (${esc(m.unit)})</label><input data-f="stock" inputmode="decimal" value="${m.stock}"></div><div class="field"><label>نبّهني عند</label><input data-f="min" inputmode="decimal" value="${m.min}"></div></div>${low?'<span class="lowtag">⚠️ قرب يخلص، اشترِ قبل ما ينفد</span>':''}`}
-    else box.innerHTML='<p class="hint">🔒 تتبّع المخزون في النسخة المميزة</p>';
+      box.innerHTML=`<div class="grid2"><div class="field"><label>المخزون الحالي (${esc(m.unit)})</label><input data-f="stock" inputmode="decimal" value="${m.stock}"></div><div class="field"><label>نبّهني عند</label><input data-f="min" inputmode="decimal" value="${m.min}"></div></div>${low?'<span class="lowtag">قرب يخلص، اشترِ قبل ما ينفد</span>':''}`}
+    else box.innerHTML='<p class="hint">'+LOCK+' تتبّع المخزون في النسخة المميزة</p>';
     el.appendChild(box)})};
 $('mats').addEventListener('input',e=>{const f=e.target.dataset.f;if(f!=='stock'&&f!=='min')return;e.stopImmediatePropagation();const m=S.mats.find(x=>x.id===e.target.closest('.mat').dataset.id);m[f]=e.target.value===''?'':n(e.target.value);save();renderStockAlert()},true);
 const _rp=renderProds;
 renderProds=function(){_rp();if(!isPro())return;document.querySelectorAll('#prods .prod').forEach(el=>{const p=S.prods.find(x=>x.id===el.dataset.id);const k=p&&canMake(p);if(k===null||k===undefined)return;
-  const d=document.createElement('p');d.className='hint';d.innerHTML=`📦 تقدر تنتج من المخزون الحالي: <b class="num">${fmt(k)}</b>`;el.appendChild(d)})};
+  const d=document.createElement('p');d.className='hint';d.innerHTML=`تقدر تنتج من المخزون الحالي: <b class="num">${fmt(k)}</b>`;el.appendChild(d)})};
 function renderStockAlert(){let b=$('stockAlert');if(!b){b=document.createElement('div');b.id='stockAlert';$('alert').after(b)}
   const L=isPro()?lowMats():[];b.innerHTML=L.length?`<div class="alert bad"><div class="txt"><b>خامات قربت تخلص</b><p>${L.map(m=>esc(m.name)+' (<span class="num">'+fmt(n(m.stock))+'</span> '+esc(m.unit)+')').join('، ')}</p></div><button class="btn primary" data-goto="mats">عرض الخامات</button></div>`:''}
 
