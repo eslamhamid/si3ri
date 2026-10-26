@@ -299,6 +299,16 @@ body[data-tab]:not([data-tab="list"]) #alert,body[data-tab]:not([data-tab="list"
 body[data-tab]:not([data-tab="list"]) .ratecard{padding:8px 16px}
 body[data-tab]:not([data-tab="list"]) .ratecard #rateNow{font-size:30px}
 body[data-tab]:not([data-tab="list"]) .rate-row2{align-items:center;margin:0}
+
+/* v2.0.1 polish */
+.btn.nile{background:var(--nile);color:var(--on-accent,#fff)}
+.btn.primary{color:var(--on-accent,#fff)}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+#alert:empty,#guard:empty{display:none}
+.ratecard .since{color:var(--ink);opacity:.82;font-size:14px}
+.ratecard .cur{color:var(--ink);opacity:.8}
+.ratecard label{font-size:14px;color:var(--ink);opacity:.85}
+body{padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))}
 </style>
 </head>
 <body>
@@ -1104,7 +1114,7 @@ const _rl3=renderList;renderList=function(){_rl3();$('card').hidden=true;if($('t
 
 
 // ---- what's new (عدّل هذه القائمة مع كل تحديث) ----
-const APP_VERSION='2.0';
+const APP_VERSION='2.0.1';
 const WHATS_NEW=[
  'تصميم جديد: شريط تنقل سفلي وأيقونات وبطاقة سعر أوضح',
  'تقرير الحماية: كم ينقصك لو بعت بالأسعار القديمة (للنسخة المميزة)',
