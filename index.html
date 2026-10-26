@@ -309,6 +309,9 @@ body[data-tab]:not([data-tab="list"]) .rate-row2{align-items:center;margin:0}
 .ratecard .cur{color:var(--ink);opacity:.8}
 .ratecard label{font-size:14px;color:var(--ink);opacity:.85}
 body{padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))}
+
+.aboutlink{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--surface);border:1.5px solid var(--line);border-inline-start:5px solid var(--saffron);border-radius:14px;padding:14px 16px;color:var(--ink);text-decoration:none;font:800 15px/1.5 var(--body)}
+.aboutlink span{color:var(--nile);white-space:nowrap;font-weight:700;font-size:13.5px}
 </style>
 </head>
 <body>
@@ -429,6 +432,7 @@ body{padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))}
 
   <section id="t-set" hidden>
     <div class="sec-head"><h2>الإعدادات</h2></div>
+    <a class="aboutlink" href="about.html" target="_blank" rel="noopener">ما فوائد «سعري اليوم» وكيف يفيد مشروعك؟ <span>اقرأ المزيد ←</span></a>
     <div class="panel">
       <div class="field"><label for="bizName">اسم مشروعك (يظهر على القائمة)</label><input id="bizName"></div>
       <div class="grid2">
@@ -1114,7 +1118,7 @@ const _rl3=renderList;renderList=function(){_rl3();$('card').hidden=true;if($('t
 
 
 // ---- what's new (عدّل هذه القائمة مع كل تحديث) ----
-const APP_VERSION='2.0.1';
+const APP_VERSION='2.0.2';
 const WHATS_NEW=[
  'تصميم جديد: شريط تنقل سفلي وأيقونات وبطاقة سعر أوضح',
  'تقرير الحماية: كم ينقصك لو بعت بالأسعار القديمة (للنسخة المميزة)',
