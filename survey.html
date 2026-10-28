@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0c2a2b">
+<title>استبيان سعري اليوم</title>
+<meta name="description" content="استبيان قصير (دقيقتين) لأصحاب المشاريع عن التسعير وتغيّر الدولار.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="icon-192-1.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lalezar&family=Tajawal:wght@400;500;700;800&display=swap">
+<style>
+:root{--bg:#eef2ef;--surface:#fff;--ink:#0c2a2b;--muted:#546b68;--line:#cfdad4;--gold:#e8a317;--sun:#f6c453;--nile:#1c7a6e;--on:#0c2a2b;
+  --display:"Lalezar","Tajawal",Tahoma,sans-serif;--body:"Tajawal",Tahoma,sans-serif}
+@media (prefers-color-scheme:dark){:root{--bg:#071a1b;--surface:#0f2a2b;--ink:#eaf3ef;--muted:#9fb8b2;--line:#244848;--nile:#46c2b2}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 var(--body)}
+.wrap{max-width:620px;margin:0 auto;padding:24px 18px 60px}
+h1{font-family:var(--display);font-weight:400;font-size:32px;line-height:1.3;margin:0 0 6px}
+.lead{color:var(--muted);margin:0 0 22px}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
+.q h2{font:700 17px/1.5 var(--body);margin:0 0 4px}
+.q .hint{color:var(--muted);font-size:14px;margin:0 0 10px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts label{position:relative}
+.opts input{position:absolute;opacity:0;inset:0;width:100%;height:100%;cursor:pointer}
+.opts span{display:inline-block;padding:9px 16px;border:1.5px solid var(--line);border-radius:999px;font-weight:500}
+.opts input:checked+span{background:var(--sun);border-color:var(--gold);color:var(--on);font-weight:700}
+.opts input:focus-visible+span{outline:3px solid var(--gold);outline-offset:2px}
+textarea,input[type=text]{width:100%;font:inherit;color:inherit;background:transparent;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;margin-top:10px}
+textarea{min-height:84px;resize:vertical}
+.send{width:100%;border:0;border-radius:14px;padding:15px;font:800 18px var(--body);background:var(--sun);color:var(--on);cursor:pointer;margin-top:6px}
+.note{color:var(--muted);font-size:14px;margin-top:12px;text-align:center}
+.done{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>استبيان قصير 🌹</h1>
+  <p class="lead">دقيقتين بس. بتساعدني أعرف مشاكل التسعير الحقيقية عند أصحاب المشاريع. ما في إجابة صاح أو غلط.</p>
+
+  <form id="f" autocomplete="off">
+    <div class="q" data-k="تبيع شنو؟">
+      <h2>١) بتبيع شنو؟</h2><p class="hint">اختار واحد أو أكتر</p>
+      <div class="opts" data-multi>
+        <label><input type="checkbox" value="عطور وبخور"><span>عطور وبخور</span></label>
+        <label><input type="checkbox" value="حلويات وكعك"><span>حلويات وكعك</span></label>
+        <label><input type="checkbox" value="أكل ووجبات"><span>أكل ووجبات</span></label>
+        <label><input type="checkbox" value="ملابس"><span>ملابس</span></label>
+        <label><input type="checkbox" value="مستحضرات تجميل"><span>مستحضرات تجميل</span></label>
+        <label><input type="checkbox" value="إكسسوار"><span>إكسسوار</span></label>
+        <label><input type="checkbox" value="بضاعة مستوردة"><span>بضاعة مستوردة</span></label>
+      </div>
+      <input type="text" name="other1" placeholder="شي تاني؟ اكتبه هنا (اختياري)">
+    </div>
+
+    <div class="q" data-k="وين بتبيع؟">
+      <h2>٢) وين بتبيع؟</h2><p class="hint">اختار واحد أو أكتر</p>
+      <div class="opts" data-multi>
+        <label><input type="checkbox" value="فيسبوك"><span>فيسبوك</span></label>
+        <label><input type="checkbox" value="واتساب"><span>واتساب</span></label>
+        <label><input type="checkbox" value="إنستغرام"><span>إنستغرام</span></label>
+        <label><input type="checkbox" value="تيك توك"><span>تيك توك</span></label>
+        <label><input type="checkbox" value="محل أو سوق"><span>محل أو سوق</span></label>
+        <label><input type="checkbox" value="متجر إلكتروني"><span>متجر إلكتروني</span></label>
+      </div>
+    </div>
+
+    <div class="q" data-k="الدولار بيأثر على أسعارك؟">
+      <h2>٣) الدولار بيأثر على أسعارك؟</h2>
+      <div class="opts">
+        <label><input type="radio" name="r3" value="كتير"><span>كتير</span></label>
+        <label><input type="radio" name="r3" value="شوية"><span>شوية</span></label>
+        <label><input type="radio" name="r3" value="ما بيأثر"><span>ما بيأثر</span></label>
+      </div>
+    </div>
+
+    <div class="q" data-k="كل كم بتغيّر أسعارك؟">
+      <h2>٤) كل كم بتغيّر أسعارك؟</h2>
+      <div class="opts">
+        <label><input type="radio" name="r4" value="كل يوم"><span>كل يوم</span></label>
+        <label><input type="radio" name="r4" value="كل أسبوع"><span>كل أسبوع</span></label>
+        <label><input type="radio" name="r4" value="لما أضطر"><span>لما أضطر</span></label>
+        <label><input type="radio" name="r4" value="ما بغيّر"><span>ما بغيّر</span></label>
+      </div>
+    </div>
+
+    <div class="q" data-k="كيف بتسعّر؟">
+      <h2>٥) كيف بتسعّر منتجاتك؟</h2>
+      <div class="opts">
+        <label><input type="radio" name="r5" value="بحسب كل التكاليف"><span>بحسب كل التكاليف</span></label>
+        <label><input type="radio" name="r5" value="بالتقدير"><span>بالتقدير</span></label>
+        <label><input type="radio" name="r5" value="بقلّد السوق"><span>بقلّد السوق</span></label>
+      </div>
+    </div>
+
+    <div class="q" data-k="خسرت بسبب سعر غلط؟">
+      <h2>٦) حصل خسرت أو ما ربحت كويس بسبب سعر غلط؟</h2>
+      <div class="opts">
+        <label><input type="radio" name="r6" value="أيوه"><span>أيوه</span></label>
+        <label><input type="radio" name="r6" value="لا"><span>لا</span></label>
+        <label><input type="radio" name="r6" value="مش متأكد"><span>مش متأكد</span></label>
+      </div>
+      <input type="text" name="t6" placeholder="لو أيوه، احكي لي باختصار (اختياري)">
+    </div>
+
+    <div class="q" data-k="تستخدم تطبيق يحسب السعر؟">
+      <h2>٧) لو في تطبيق يحسب سعرك وربحك في دقيقة، تستخدمو؟</h2>
+      <div class="opts">
+        <label><input type="radio" name="r7" value="أكيد"><span>أكيد</span></label>
+        <label><input type="radio" name="r7" value="ممكن"><span>ممكن</span></label>
+        <label><input type="radio" name="r7" value="لا"><span>لا</span></label>
+      </div>
+    </div>
+
+    <div class="q" data-k="أهم حاجة تحتاجها / اللي بيمنعك">
+      <h2>٨) شنو أهم حاجة تحتاجها في أداة زي دي؟ وشنو اللي ممكن يمنعك تجربها؟</h2>
+      <textarea name="t8" placeholder="اكتب بكلامك العادي"></textarea>
+    </div>
+
+    <div class="q" data-k="الاسم أو التواصل">
+      <h2>٩) اسمك (اختياري)</h2>
+      <input type="text" name="t9" placeholder="الاسم أو اسم النشاط">
+    </div>
+
+    <button class="send" type="submit">أرسل إجاباتي عبر واتساب</button>
+    <p class="note">لما تضغط، بيفتح واتساب برسالة جاهزة فيها إجاباتك، وانت بتضغط «إرسال». ما بيتم إرسال أي شي غير كدا.</p>
+  </form>
+</div>
+
+<script>
+const WA='249919925650';
+document.getElementById('f').addEventListener('submit',e=>{
+  e.preventDefault();
+  const f=e.target; const lines=['استبيان سعري اليوم'];
+  f.querySelectorAll('.q').forEach(q=>{
+    const k=q.dataset.k; let v=[];
+    q.querySelectorAll('input[type=checkbox]:checked,input[type=radio]:checked').forEach(i=>v.push(i.value));
+    q.querySelectorAll('input[type=text],textarea').forEach(i=>{if(i.value.trim())v.push(i.value.trim())});
+    if(v.length)lines.push('• '+k+' '+v.join('، '));
+  });
+  if(lines.length<2){document.querySelector('.note').textContent='اختار إجابة واحدة على الأقل 🌹';return}
+  if(window.goatcounter&&goatcounter.count)goatcounter.count({path:'survey-submit',title:'Survey submit',event:true});
+  location.href='https://wa.me/'+WA+'?text='+encodeURIComponent(lines.join('\n'));
+});
+</script>
+<script data-goatcounter="https://si3ri.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
